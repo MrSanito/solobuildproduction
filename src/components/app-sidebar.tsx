@@ -78,6 +78,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -102,6 +103,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   render={<Link href={item.url} />}
                   tooltip={item.title}
                   isActive={isActive}
+                  onClick={() => setOpenMobile(false)}
                   className={`transition-all duration-200 h-10 px-3 ${
                     isActive ? 'bg-blue-50 text-blue-600' : 'hover:bg-slate-100 text-slate-600'
                   }`}

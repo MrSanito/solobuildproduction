@@ -117,7 +117,7 @@ export default function ProductionManagement() {
       
 
       {/* Page Content */}
-      <div className="w-[80%] mx-auto space-y-3">
+      <div className="w-full md:w-[80%] mx-auto px-4 md:px-0 space-y-3">
         {/* Page Header */}
         <div className="pt-1">
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Production Management</h1>

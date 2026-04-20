@@ -126,7 +126,7 @@ const AlertManagement: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base-100 font-sans" data-theme="light">
-      <div className="w-[80%] mx-auto py-4 space-y-3">
+      <div className="w-full md:w-[80%] mx-auto px-4 md:px-0 py-4 space-y-3">
 
         {/* Page Header */}
         <div>

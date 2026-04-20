@@ -168,7 +168,7 @@ const MachineManagement: React.FC = () => {
   return (
     <div className="min-h-screen bg-base-200 font-sans" data-theme="light">
 
-      <main className="w-[80%] mx-auto py-4 space-y-3">
+      <main className="w-full md:w-[80%] mx-auto px-4 md:px-0 py-4 space-y-3">
         {/* Page Header */}
         <div className="flex items-end justify-between flex-wrap gap-3">
           <div>
