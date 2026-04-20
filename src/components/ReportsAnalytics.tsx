@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import {
   LineChart, Line, BarChart, Bar,
@@ -81,7 +82,7 @@ const ProductionEfficiencyChart: React.FC = () => (
         <Tooltip
           contentStyle={tooltipStyle}
           cursor={{ stroke: BLUE, strokeWidth: 1, strokeDasharray: "4 4" }}
-          formatter={(v: number) => [`${v}%`, "Efficiency"]}
+          formatter={(v: any) => [`${v}%`, "Efficiency"]}
         />
         <Legend
           iconType="circle"
@@ -112,7 +113,7 @@ const MachineUtilizationChart: React.FC = () => (
         <Tooltip
           contentStyle={tooltipStyle}
           cursor={{ fill: "rgba(74,124,247,0.06)" }}
-          formatter={(v: number) => [`${v}%`, "Utilization"]}
+          formatter={(v: any) => [`${v}%`, "Utilization"]}
         />
         <Legend
           iconType="square"
@@ -159,7 +160,7 @@ const OutputOverTimeChart: React.FC = () => (
         <Tooltip
           contentStyle={tooltipStyle}
           cursor={{ stroke: GREEN_TEAL, strokeWidth: 1, strokeDasharray: "4 4" }}
-          formatter={(v: number) => [v, "Units Produced"]}
+          formatter={(v: any) => [v, "Units Produced"]}
         />
         <Legend
           iconType="circle"

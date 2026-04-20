@@ -99,23 +99,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton
-                  asChild
+                  render={<Link href={item.url} />}
                   tooltip={item.title}
                   isActive={isActive}
                   className={`transition-all duration-200 h-10 px-3 ${
                     isActive ? 'bg-blue-50 text-blue-600' : 'hover:bg-slate-100 text-slate-600'
                   }`}
                 >
-                  <Link href={item.url} className="flex items-center gap-3 w-full h-full">
-                    {item.icon && (
-                      <item.icon 
-                        className={`size-5 shrink-0 ${isActive ? 'text-blue-600' : 'text-slate-500'}`} 
-                      />
-                    )}
-                    <span className="font-medium whitespace-nowrap overflow-hidden truncate">
-                      {item.title}
-                    </span>
-                  </Link>
+                  {item.icon && (
+                    <item.icon 
+                      className={`size-5 shrink-0 ${isActive ? 'text-blue-600' : 'text-slate-500'}`} 
+                    />
+                  )}
+                  <span className="font-medium whitespace-nowrap overflow-hidden truncate">
+                    {item.title}
+                  </span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );
