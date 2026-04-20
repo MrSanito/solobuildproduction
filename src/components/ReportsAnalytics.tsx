@@ -184,23 +184,25 @@ const OutputOverTimeChart: React.FC = () => (
 // ── Page ───────────────────────────────────────────────────────────────────
 const ReportsAnalytics: React.FC = () => (
   <div className="min-h-screen bg-base-100 font-sans" data-theme="light">
-    <div className="max-w-3xl mx-auto px-4 py-6 space-y-5">
+    <div className="w-[80%] mx-auto py-4 space-y-3">
 
       {/* Page Header */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-base-content">
           Reports &amp; Analytics
         </h1>
-        <p className="text-sm text-base-content/50 mt-1">
+        <p className="text-sm text-base-content/50 mt-0">
           Insights and trends across production operations
         </p>
       </div>
 
-      {/* Charts */}
-      <ProductionEfficiencyChart />
-      <MachineUtilizationChart />
-      <DelayTrendsChart />
-      <OutputOverTimeChart />
+      {/* Charts Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ProductionEfficiencyChart />
+        <MachineUtilizationChart />
+        <DelayTrendsChart />
+        <OutputOverTimeChart />
+      </div>
 
     </div>
   </div>

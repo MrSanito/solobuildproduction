@@ -117,11 +117,11 @@ export default function ProductionManagement() {
       
 
       {/* Page Content */}
-      <div className="p-4 max-w-2xl mx-auto space-y-5">
+      <div className="w-[80%] mx-auto space-y-3">
         {/* Page Header */}
-        <div className="pt-2">
+        <div className="pt-1">
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Production Management</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Monitor and manage your production operations in real-time</p>
+          <p className="text-sm text-slate-500 mt-0">Monitor and manage your production operations in real-time</p>
         </div>
 
         {/* Production Pipeline */}
@@ -254,7 +254,7 @@ export default function ProductionManagement() {
         <div className="card bg-white shadow-sm border border-slate-100">
           <div className="card-body p-5">
             <h2 className="text-base font-bold text-slate-900 mb-4">Live Machine Status</h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {machines.map((machine, i) => (
                 <div
                   key={i}

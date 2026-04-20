@@ -126,12 +126,12 @@ const AlertManagement: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base-100 font-sans" data-theme="light">
-      <div className="max-w-3xl mx-auto px-4 py-6 space-y-5">
+      <div className="w-[80%] mx-auto py-4 space-y-3">
 
         {/* Page Header */}
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-base-content">Alert Management</h1>
-          <p className="text-sm text-base-content/50 mt-1">
+          <p className="text-sm text-base-content/50 mt-0">
             Monitor and manage system alerts by severity and source
           </p>
         </div>

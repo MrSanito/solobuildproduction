@@ -112,11 +112,11 @@ export default function LabourManagement() {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4">
-      <div className="max-w-4xl mx-auto space-y-5">
+      <div className="w-[80%] mx-auto space-y-3">
         {/* Page Header */}
-        <div className="pt-2">
+        <div className="pt-1">
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Labour Management</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Track workforce allocation and productivity</p>
+          <p className="text-sm text-slate-500 mt-0">Track workforce allocation and productivity</p>
         </div>
 
         {/* KPI Cards */}

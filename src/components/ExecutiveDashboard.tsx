@@ -104,15 +104,15 @@ export default function ExecutiveDashboard() {
       
 
       {/* Page Content */}
-      <div className="p-4 max-w-2xl mx-auto space-y-5">
+      <div className="w-[80%] mx-auto space-y-3">
         {/* Page Header */}
-        <div className="pt-2">
+        <div className="pt-1">
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Executive Dashboard</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Overview of system performance and critical metrics</p>
+          <p className="text-sm text-slate-500 mt-0">Overview of system performance and critical metrics</p>
         </div>
 
         {/* KPI Grid */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
           {kpiCards.map((card, i) => {
             const Icon = card.icon;
             return (

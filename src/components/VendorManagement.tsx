@@ -143,11 +143,11 @@ export default function VendorManagement() {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4">
-      <div className="max-w-4xl mx-auto space-y-5">
+      <div className="w-[80%] mx-auto space-y-3">
         {/* Page Header */}
-        <div className="pt-2">
+        <div className="pt-1">
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Vendor Management</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Manage supplier relationships and performance</p>
+          <p className="text-sm text-slate-500 mt-0">Manage supplier relationships and performance</p>
         </div>
 
         {/* Vendors Table */}

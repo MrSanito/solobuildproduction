@@ -174,13 +174,13 @@ const InventoryManagement: React.FC = () => {
   return (
     <div className="min-h-screen bg-base-200 font-sans" data-theme="light">
  
-      <main className="max-w-5xl mx-auto px-4 py-6 space-y-6">
+      <main className="w-[80%] mx-auto py-4 space-y-3">
         {/* Page Header */}
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-base-content">
             Inventory Management
           </h1>
-          <p className="text-sm text-base-content/50 mt-1">
+          <p className="text-sm text-base-content/50 mt-0">
             Track and manage stock levels across all materials
           </p>
         </div>

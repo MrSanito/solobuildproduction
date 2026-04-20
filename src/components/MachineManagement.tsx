@@ -168,14 +168,14 @@ const MachineManagement: React.FC = () => {
   return (
     <div className="min-h-screen bg-base-200 font-sans" data-theme="light">
 
-      <main className="max-w-5xl mx-auto px-4 py-6 space-y-6">
+      <main className="w-[80%] mx-auto py-4 space-y-3">
         {/* Page Header */}
         <div className="flex items-end justify-between flex-wrap gap-3">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-base-content">
               Machine Management
             </h1>
-            <p className="text-sm text-base-content/50 mt-1">
+            <p className="text-sm text-base-content/50 mt-0">
               Monitor machine status, utilization, and maintenance schedules
             </p>
           </div>
@@ -200,7 +200,7 @@ const MachineManagement: React.FC = () => {
         <SummaryBar />
 
         {/* Machine Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {visible.map((machine) => (
             <MachineCard key={machine.id} machine={machine} />
           ))}
