@@ -95,8 +95,6 @@ const labourList = [
   { id: "LBR-1008", name: "Rahul Gupta",   avatar: "RG", dept: "Packing",      designation: "Packing Operator",  skills: "Packing, Labeling",  machine: "Packing Area",   shift: "B (02:00 PM - 10:00 PM)", status: "Present",  attendance: "02:01 PM",  attendanceSub: "In Time",  productivity: 78, color: "#a855f7" },
 ];
 
-const avatarColors = ["#3b82f6","#6366f1","#8b5cf6","#a855f7","#ec4899","#10b981","#14b8a6","#06b6d4","#f43f5e","#f59e0b"];
-
 const workersData: any[] = [
   { id: "LBR-1001", initials: "RS", name: "Rohit Sharma", role: "CNC Operator", skill: "CNC Operator", job: "JOB-0845", status: "active", shift: "Morning", productivity: { outputPerDay: 420, efficiencyActual: 92, efficiencyTarget: 90, defectRate: 0.8, reworkRate: 0.5 }, idle: false, avatar: "RS", avatarColor: "#3b82f6", attendance: [{ day: 1, type: "present" }, { day: 2, type: "present" }, { day: 3, type: "overtime" }], alerts: ["Expiring Safety Certification (3 days)"], orders: [{ id: "ORD-99", client: "Tesla India", role: "Lead Operator", status: "In Progress" }], activityLog: [{ time: "09:15 AM", action: "Clocked In" }], salary: 450000, isSpecialist: true, impactIfAbsent: "High impact on CNC line output throughput.", phone: "+91 9876543210" },
   { id: "LBR-1002", initials: "AK", name: "Amit Kumar", role: "Lathe Operator", skill: "Lathe Operator", job: "JOB-0839", status: "active", shift: "Morning", productivity: { outputPerDay: 150, efficiencyActual: 88, efficiencyTarget: 90, defectRate: 0.2, reworkRate: 0.1 }, idle: false, avatar: "AK", avatarColor: "#6366f1", attendance: Array.from({ length: 15 }).map((_, i) => ({ day: i + 1, type: "present" })), alerts: [], orders: [{ id: "ORD-102", client: "SpaceX Aerospace", role: "Final Verification", status: "Completed" }], activityLog: [{ time: "06:05 AM", action: "Clocked In" }], salary: 380000, isSpecialist: true, impactIfAbsent: "Critical bottleneck for shipping releases.", phone: "+91 9123456789" },
@@ -215,103 +213,99 @@ export default function LabourManagement() {
           })}
         </div>
 
-        {/* ── SECTION 2 + 3: Middle Row ── */}
+        {/* ── SECTION 2: ROW 1 Overview Grids ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-
-          {/* LEFT COLUMN: Attendance + Department + Upcoming Leaves */}
-          <div className="space-y-4">
-
-            {/* Attendance Overview */}
-            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-bold text-slate-800">Attendance Overview</h2>
-                <button className="text-xs font-medium text-blue-600 hover:underline">View Details</button>
-              </div>
-              <div className="flex items-center gap-6">
-                <DonutChart />
-                <div className="flex-1 space-y-2.5">
-                  {attendanceData.map((d, i) => (
-                    <div key={i} className="flex items-center gap-2 justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
-                        <span className="text-sm text-slate-600">{d.label}</span>
-                      </div>
-                      <span className="text-sm font-semibold text-slate-700">
-                        {d.value} <span className="text-slate-400 font-normal text-xs">({d.pct}%)</span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Attendance Overview */}
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold text-slate-800">Attendance Overview</h2>
+              <button className="text-xs font-medium text-blue-600 hover:underline">View Details</button>
             </div>
-
-            {/* Department Distribution */}
-            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-bold text-slate-800">Department Distribution</h2>
-                <button className="text-xs font-medium text-blue-600 hover:underline">View All</button>
-              </div>
-              <div className="space-y-3">
-                {departments.map((d, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <span className="text-sm text-slate-600 w-24 shrink-0">{d.name}</span>
-                    <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-500 rounded-full" style={{ width: `${d.pct}%` }} />
+            <div className="flex items-center gap-6">
+              <DonutChart />
+              <div className="flex-1 space-y-2.5">
+                {attendanceData.map((d, i) => (
+                  <div key={i} className="flex items-center gap-2 justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
+                      <span className="text-sm text-slate-600">{d.label}</span>
                     </div>
-                    <span className="text-sm text-slate-500 w-20 text-right shrink-0">{d.count} ({d.pct}%)</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Upcoming Leaves */}
-            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-bold text-slate-800">Upcoming Leaves</h2>
-                <button className="text-xs font-medium text-blue-600 hover:underline">View All</button>
-              </div>
-              <div className="space-y-3">
-                {upcomingLeaves.map((lv, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-                      <Calendar className="w-4 h-4 text-blue-500" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-800 leading-none">{lv.name}</p>
-                      <p className="text-xs text-slate-400 mt-0.5">{lv.dept}</p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-xs text-slate-500">{lv.date}</p>
-                      <p className="text-xs font-semibold text-orange-500 mt-0.5">{lv.type}</p>
-                    </div>
+                    <span className="text-sm font-semibold text-slate-700">
+                      {d.value} <span className="text-slate-400 font-normal text-xs">({d.pct}%)</span>
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Labour Alerts */}
-          <div>
-            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
-              <h2 className="text-sm font-bold text-slate-800 mb-4">Labour Alerts</h2>
-              <div className="space-y-3">
-                {labourAlerts.map((alert, i) => {
-                  const Icon = alert.icon;
-                  return (
-                    <div key={i} className={`rounded-xl border ${alert.border} ${alert.bg} p-4`}>
-                      <div className="flex items-start gap-3">
-                        <div className={`w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm`}>
-                          <Icon className={`w-5 h-5 ${alert.color}`} />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-slate-800">{alert.msg}</p>
-                          <button className="text-xs text-blue-600 hover:underline mt-1">{alert.action}</button>
-                        </div>
+          {/* Department Distribution */}
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold text-slate-800">Department Distribution</h2>
+              <button className="text-xs font-medium text-blue-600 hover:underline">View All</button>
+            </div>
+            <div className="space-y-3">
+              {departments.map((d, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <span className="text-sm text-slate-600 w-24 shrink-0">{d.name}</span>
+                  <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-500 rounded-full" style={{ width: `${d.pct}%` }} />
+                  </div>
+                  <span className="text-sm text-slate-500 w-20 text-right shrink-0">{d.count} ({d.pct}%)</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── SECTION 3: ROW 2 Alerts & Distribution (per user request) ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Labour Alerts */}
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
+            <h2 className="text-sm font-bold text-slate-800 mb-4">Labour Alerts</h2>
+            <div className="space-y-3">
+              {labourAlerts.map((alert, i) => {
+                const Icon = alert.icon;
+                return (
+                  <div key={i} className={`rounded-xl border ${alert.border} ${alert.bg} p-4`}>
+                    <div className="flex items-start gap-3">
+                      <div className={`w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm`}>
+                        <Icon className={`w-5 h-5 ${alert.color}`} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">{alert.msg}</p>
+                        <button className="text-xs text-blue-600 hover:underline mt-1">{alert.action}</button>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Upcoming Leaves (acting as Dept Distribution in text or just the remaining one) */}
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold text-slate-800">Upcoming Leaves</h2>
+              <button className="text-xs font-medium text-blue-600 hover:underline">View All</button>
+            </div>
+            <div className="space-y-3">
+              {upcomingLeaves.map((lv, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                    <Calendar className="w-4 h-4 text-blue-500" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-slate-800 leading-none">{lv.name}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{lv.dept}</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-xs text-slate-500">{lv.date}</p>
+                    <p className="text-xs font-semibold text-orange-500 mt-0.5">{lv.type}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -322,7 +316,6 @@ export default function LabourManagement() {
           <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between flex-wrap gap-3">
             <h2 className="text-sm font-bold text-slate-800">Labour List</h2>
             <div className="flex items-center gap-2 flex-wrap">
-              {/* Department Filter */}
               <select className="text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                 <option>All Departments</option>
                 <option>Production</option>
@@ -332,33 +325,28 @@ export default function LabourManagement() {
                 <option>Quality</option>
                 <option>Packing</option>
               </select>
-              {/* Shift Filter */}
               <select className="text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                 <option>All Shifts</option>
                 <option>Shift A</option>
                 <option>Shift B</option>
                 <option>Shift C</option>
               </select>
-              {/* Status Filter */}
               <select className="text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                 <option>All Status</option>
                 <option>Present</option>
                 <option>Absent</option>
                 <option>On Leave</option>
               </select>
-              {/* Date */}
               <div className="flex items-center gap-1.5 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-600">
                 <Calendar className="w-3.5 h-3.5 text-slate-400" />
                 Today
               </div>
-              {/* Settings icon */}
               <button className="p-2 border border-slate-200 rounded-lg hover:bg-slate-50">
                 <Settings className="w-4 h-4 text-slate-400" />
               </button>
             </div>
           </div>
 
-          {/* Table */}
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -437,7 +425,6 @@ export default function LabourManagement() {
             </table>
           </div>
 
-          {/* Pagination */}
           <div className="px-5 py-3 border-t border-slate-100 flex items-center justify-between">
             <p className="text-xs text-slate-500">Showing 1 to 8 of 326 labours</p>
             <div className="flex items-center gap-1">
@@ -471,11 +458,6 @@ export default function LabourManagement() {
               >
                 <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
               </button>
-              <select className="ml-2 text-xs border border-slate-200 rounded px-2 py-1.5 text-slate-600 focus:outline-none">
-                <option>10 / page</option>
-                <option>20 / page</option>
-                <option>50 / page</option>
-              </select>
             </div>
           </div>
         </div>

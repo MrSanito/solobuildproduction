@@ -325,18 +325,8 @@ export default function ExecutiveDashboard() {
             <h2 className="text-sm font-semibold text-gray-800">Machines Utilization</h2>
             <a href="#" className="text-xs text-blue-600 flex items-center gap-1">View All <ArrowRight size={11} /></a>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="mt-2">
             <DonutChart />
-            <div className="flex flex-col gap-2.5">
-              {utilSegments.map((s) => (
-                <div key={s.label} className="flex items-center gap-2">
-                  <div className="size-2.5 rounded-sm shrink-0" style={{ backgroundColor: s.color }} />
-                  <span className="text-xs text-gray-600 w-24">{s.label}</span>
-                  <span className="text-xs font-bold text-gray-800">{s.count}</span>
-                  <span className="text-xs text-gray-400">({s.pct}%)</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
