@@ -1,301 +1,419 @@
-import { Bell, Search, Menu, Clock, User, Calendar, FileText, AlertCircle, CheckCircle2, Circle, ChevronRight } from "lucide-react";
+"use client";
+
+import React, { useState } from "react";
+import {
+  ClipboardList,
+  Settings2,
+  Activity,
+  Clock,
+  AlertTriangle,
+  ArrowRight,
+  Plus,
+  Cpu,
+} from "lucide-react";
+
+// ── Types ──────────────────────────────────────────────────
+type MachineStatus = "running" | "idle" | "down" | "maintenance";
+
+// ── Mock Data ──────────────────────────────────────────────
+const statCards = [
+  {
+    label: "Active Orders",
+    value: "68",
+    Icon: ClipboardList,
+    iconBg: "bg-blue-50",
+    iconColor: "text-blue-600",
+    change: "▲ 12% vs yesterday",
+    changeColor: "text-green-500",
+  },
+  {
+    label: "Orders in Production",
+    value: "32",
+    Icon: Settings2,
+    iconBg: "bg-green-50",
+    iconColor: "text-green-600",
+    change: "▲ 8% vs yesterday",
+    changeColor: "text-green-500",
+  },
+  {
+    label: "Machines Running",
+    value: "38 / 60",
+    Icon: Activity,
+    iconBg: "bg-blue-50",
+    iconColor: "text-blue-500",
+    sub: "63% utilization",
+    subColor: "text-blue-500",
+    change: null,
+  },
+  {
+    label: "Delayed Orders",
+    value: "7",
+    Icon: Clock,
+    iconBg: "bg-red-50",
+    iconColor: "text-red-500",
+    change: "▼ 2 vs yesterday",
+    changeColor: "text-red-500",
+  },
+  {
+    label: "At Risk (Inventory)",
+    value: "14",
+    Icon: AlertTriangle,
+    iconBg: "bg-orange-50",
+    iconColor: "text-orange-500",
+    change: "▼ 3 vs yesterday",
+    changeColor: "text-red-500",
+  },
+];
 
 const pipeline = [
-  { label: "Queued", count: 8, delayed: null, color: "border-slate-300 text-slate-600", countColor: "text-slate-900" },
-  { label: "Material Ready", count: 5, delayed: "1 delayed", color: "border-blue-300 text-blue-600", countColor: "text-blue-700" },
-  { label: "In Progress", count: 12, delayed: "3 delayed", color: "border-purple-300 text-purple-600", countColor: "text-purple-700" },
-  { label: "QC", count: 4, delayed: null, color: "border-amber-300 text-amber-600", countColor: "text-amber-700" },
-  { label: "Completed", count: 18, delayed: null, color: "border-emerald-300 text-emerald-600", countColor: "text-emerald-700" },
+  { label: "Planned", value: 12 },
+  { label: "Material Ready", value: 9 },
+  { label: "In Production", value: 32, active: true },
+  { label: "Quality Check", value: 8 },
+  { label: "Completed", value: 42 },
 ];
 
-const timelineSteps = [
-  { id: 1, label: "Queued", status: "done" },
-  { id: 2, label: "Material Ready", status: "done" },
-  { id: 3, label: "In Progress", status: "active" },
-  { id: 4, label: "QC", status: "pending" },
-  { id: 5, label: "Completed", status: "pending" },
+const rawStatuses: MachineStatus[] = [
+  "running","running","idle","running","down","running","running","idle","running","running",
+  "running","idle","running","running","running","down","running","maintenance","running","running",
+  "running","idle","running","idle","down","running","running","running","running","running",
+  "running","idle","idle","running","running","idle","running","running","down","running",
+  "running","running","running","idle","maintenance","running","running","running","running","running",
+  "running","running","running","running","running","down","running","running","down","running",
 ];
 
-const machines = [
-  {
-    id: "CNC-01",
-    job: "JOB-0845",
-    stage: "In Progress",
-    start: "08:30 AM",
-    finish: "02:45 PM",
-    utilization: 92,
-    status: "active",
-    statusColor: "bg-emerald-500",
-    cardBorder: "border-slate-100",
-    barColor: "bg-emerald-500",
-  },
-  {
-    id: "CNC-02",
-    job: "JOB-0839",
-    stage: "QC",
-    start: "07:15 AM",
-    finish: "12:30 PM",
-    utilization: 87,
-    status: "active",
-    statusColor: "bg-emerald-500",
-    cardBorder: "border-slate-100",
-    barColor: "bg-emerald-500",
-  },
-  {
-    id: "CNC-03",
-    job: "JOB-0847",
-    stage: "In Progress",
-    start: "09:00 AM",
-    finish: "03:15 PM",
-    utilization: 45,
-    status: "error",
-    statusColor: "bg-rose-500",
-    cardBorder: "border-rose-100 bg-rose-50/40",
-    barColor: "bg-rose-500",
-  },
-  {
-    id: "LATHE-01",
-    job: "JOB-0842",
-    stage: "In Progress",
-    start: "06:00 AM",
-    finish: "01:00 PM",
-    utilization: 95,
-    status: "active",
-    statusColor: "bg-emerald-500",
-    cardBorder: "border-slate-100",
-    barColor: "bg-emerald-500",
-  },
-  {
-    id: "LATHE-02",
-    job: "—",
-    stage: "Idle",
-    start: "—",
-    finish: "—",
-    utilization: 0,
-    status: "idle",
-    statusColor: "bg-amber-400",
-    cardBorder: "border-amber-100 bg-amber-50/40",
-    barColor: "bg-amber-400",
-  },
-  {
-    id: "MILL-01",
-    job: "JOB-0851",
-    stage: "Material Ready",
-    start: "10:15 AM",
-    finish: "04:00 PM",
-    utilization: 78,
-    status: "active",
-    statusColor: "bg-emerald-500",
-    cardBorder: "border-slate-100",
-    barColor: "bg-amber-400",
-  },
+const machines = Array.from({ length: 60 }, (_, i) => ({
+  id: `M${String(i + 1).padStart(2, "0")}`,
+  status: rawStatuses[i] ?? "idle",
+}));
+
+const statusColor: Record<MachineStatus, string> = {
+  running: "bg-blue-500",
+  idle: "bg-gray-300",
+  down: "bg-red-500",
+  maintenance: "bg-yellow-400",
+};
+
+const activeOrders = [
+  { id: "PRJ-2505-009", name: "Auto Bracket Assembly",    status: "In Production",  stage: "Stage 3 of 5", pct: 65,  due: "16 May 2025", sc: "text-blue-600 bg-blue-50" },
+  { id: "PRJ-2505-007", name: "Hydraulic Cylinder Body",  status: "Quality Check",  stage: "Stage 4 of 5", pct: 80,  due: "14 May 2025", sc: "text-purple-600 bg-purple-50" },
+  { id: "PRJ-2505-003", name: "Gear Housing Unit",        status: "In Production",  stage: "Stage 3 of 5", pct: 58,  due: "15 May 2025", sc: "text-blue-600 bg-blue-50" },
+  { id: "PRJ-2505-001", name: "Valve Control Module",     status: "Material Ready", stage: "Stage 2 of 5", pct: 30,  due: "18 May 2025", sc: "text-orange-600 bg-orange-50" },
+  { id: "PRJ-2505-010", name: "Motor Shaft",              status: "Planned",        stage: "Stage 1 of 5", pct: 10,  due: "20 May 2025", sc: "text-gray-600 bg-gray-100" },
 ];
 
-function StageIndicator({ status }: { status: string }) {
-  if (status === "done")
-    return (
-      <div className="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center shadow-sm">
-        <CheckCircle2 className="w-4 h-4 text-white" />
-      </div>
-    );
-  if (status === "active")
-    return (
-      <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center shadow ring-4 ring-blue-100">
-        <span className="text-white text-xs font-bold">3</span>
-      </div>
-    );
-  return (
-    <div className="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center">
-      <Circle className="w-4 h-4 text-slate-400" />
-    </div>
-  );
-}
+const aiInsights = [
+  { type: "danger",  title: "High Delay Risk",   desc: "7 orders at risk of delay in next 3 days", link: "View Orders" },
+  { type: "warning", title: "Inventory Alert",   desc: "14 items running low",                       link: "View Inventory" },
+  { type: "danger",  title: "Machine Alert",     desc: "3 machines down",                            link: "View Machines" },
+  { type: "warning", title: "Labour Alert",      desc: "5 absenteeism issues detected",              link: "View Labour" },
+];
 
+const maintenance = [
+  { machine: "M12 - Lathe Machine",    date: "13 May 2025, 09:00 AM" },
+  { machine: "M18 - Drill Press",      date: "13 May 2025, 11:00 AM" },
+  { machine: "M45 - Welding Station",  date: "14 May 2025, 10:00 AM" },
+];
+
+const attentionOrders = [
+  { id: "PRJ-2505-006", project: "Pump Housing",     status: "In Production", delay: "2 Days", reason: "Machine M22 Overload", action: "Reschedule / Reassign", sc: "text-blue-600 bg-blue-50",   dc: "text-red-500" },
+  { id: "PRJ-2505-002", project: "Control Panel Box",status: "Quality Check", delay: "1 Day",  reason: "QC Hold",              action: "Review QC Report",      sc: "text-purple-600 bg-purple-50", dc: "text-orange-500" },
+  { id: "PRJ-2505-008", project: "Drive Shaft",      status: "In Production", delay: "1 Day",  reason: "Material Delay",       action: "Expedite Material",     sc: "text-blue-600 bg-blue-50",   dc: "text-orange-500" },
+];
+
+// ── Component ──────────────────────────────────────────────
 export default function ProductionManagement() {
-  return (
-    <div className="min-h-screen bg-slate-50 font-sans">
-      
+  const [selected, setSelected] = useState(machines[5]);
 
-      {/* Page Content */}
-      <div className="w-full md:w-[80%] mx-auto px-4 md:px-0 space-y-3">
-        {/* Page Header */}
-        <div className="pt-1">
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Production Management</h1>
-          <p className="text-sm text-slate-500 mt-0">Monitor and manage your production operations in real-time</p>
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      {/* ── Toolbar ── */}
+      <div className="flex justify-end gap-2 mb-5">
+        <button className="btn btn-sm btn-outline text-xs gap-1 border-gray-200 text-gray-600">
+          <Cpu size={13} /> Factory Layout
+        </button>
+        <button className="btn btn-sm btn-outline text-xs border-gray-200 text-gray-600">
+          Filters
+        </button>
+      </div>
+
+      {/* ── Stat Cards ── */}
+      <div className="grid grid-cols-5 gap-4 mb-5">
+        {statCards.map((c) => (
+          <div key={c.label} className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <div className="flex justify-between items-start mb-2">
+              <p className="text-xs text-gray-500 leading-tight">{c.label}</p>
+              <div className={`p-2 rounded-lg ${c.iconBg}`}>
+                <c.Icon size={15} className={c.iconColor} />
+              </div>
+            </div>
+            <p className="text-[1.6rem] font-bold text-gray-900 leading-none">{c.value}</p>
+            {"sub" in c && c.sub && <p className={`text-xs mt-1 font-semibold ${c.subColor}`}>{c.sub}</p>}
+            {c.change && <p className={`text-xs mt-1 ${c.changeColor}`}>{c.change}</p>}
+          </div>
+        ))}
+      </div>
+
+      {/* ── Main Grid ── */}
+      <div className="grid grid-cols-12 gap-4">
+
+        {/* ── Left: Pipeline + Factory + Attention ── */}
+        <div className="col-span-7 flex flex-col gap-4">
+
+          {/* Production Pipeline */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-sm font-semibold text-gray-800">Production Pipeline (By Stage)</h2>
+              <a href="#" className="text-xs text-blue-600 flex items-center gap-1">
+                View All Orders <ArrowRight size={11} />
+              </a>
+            </div>
+            <div className="flex items-center gap-2">
+              {pipeline.map((s, i) => (
+                <React.Fragment key={s.label}>
+                  <div
+                    className={`flex flex-col items-center px-4 py-3 rounded-xl border-2 flex-1 text-center transition-all
+                      ${s.active
+                        ? "border-blue-500 bg-blue-50 shadow-sm shadow-blue-100"
+                        : "border-gray-100 bg-gray-50"
+                      }`}
+                  >
+                    <p className={`text-[11px] font-medium mb-1 ${s.active ? "text-blue-600" : "text-gray-400"}`}>
+                      {s.label}
+                    </p>
+                    <p className={`text-3xl font-bold leading-none ${s.active ? "text-blue-600" : "text-gray-800"}`}>
+                      {s.value}
+                    </p>
+                    <p className="text-[10px] text-gray-400 mt-1">Orders</p>
+                  </div>
+                  {i < pipeline.length - 1 && <ArrowRight size={14} className="text-gray-300 shrink-0" />}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Factory Layout */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-sm font-semibold text-gray-800">Factory Layout (60 Machines)</h2>
+              <a href="#" className="text-xs text-blue-600 flex items-center gap-1">
+                View All Machines <ArrowRight size={11} />
+              </a>
+            </div>
+            {/* Legend */}
+            <div className="flex items-center gap-5 mb-3">
+              {(["running","idle","down","maintenance"] as MachineStatus[]).map((s) => (
+                <div key={s} className="flex items-center gap-1.5">
+                  <div className={`size-2.5 rounded-sm ${statusColor[s]}`} />
+                  <span className="text-[11px] text-gray-500 capitalize">{s}</span>
+                </div>
+              ))}
+            </div>
+            {/* Grid */}
+            <div className="grid grid-cols-10 gap-1 mb-3">
+              {machines.map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => setSelected(m)}
+                  title={`${m.id} – ${m.status}`}
+                  className={`
+                    text-[9px] font-semibold text-white rounded py-1.5 leading-none transition-all
+                    ${statusColor[m.status as MachineStatus]}
+                    ${selected.id === m.id ? "ring-2 ring-offset-1 ring-blue-800 scale-110 z-10" : "hover:opacity-80"}
+                  `}
+                >
+                  {m.id}
+                </button>
+              ))}
+            </div>
+            {/* Selected machine detail */}
+            <div className="bg-gray-50 rounded-xl border border-gray-200 p-3 flex items-center gap-4 mt-2">
+              <div className="flex items-center gap-2.5 min-w-[170px]">
+                <div className="p-2 bg-white rounded-lg border border-gray-200 shadow-sm">
+                  <Settings2 size={15} className="text-gray-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-gray-800 leading-tight">M06 – CNC Milling Center</p>
+                  <span className="text-[10px] font-semibold text-red-500">● Down</span>
+                  <p className="text-[10px] text-gray-400 mt-0.5">Breakdown since 10:20 AM</p>
+                </div>
+              </div>
+              <div className="flex-1 grid grid-cols-3 gap-3 text-xs border-l border-gray-200 pl-4">
+                <div>
+                  <p className="text-[10px] text-gray-400 mb-1">Current Job</p>
+                  <p className="font-semibold text-gray-800">PRJ-2505-005</p>
+                  <p className="text-gray-500 text-[10px]">Gear Housing Unit</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 mb-1">Assigned Labour</p>
+                  <div className="flex items-center gap-1">
+                    {[1,2,3].map((n) => (
+                      <div
+                        key={n}
+                        className="size-5 rounded-full bg-blue-100 border-2 border-white text-[8px] font-bold text-blue-700 flex items-center justify-center -ml-1 first:ml-0"
+                      >
+                        {n}
+                      </div>
+                    ))}
+                    <span className="text-[10px] text-gray-400 ml-1">+2</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 mb-1">Last Maintenance</p>
+                  <p className="font-semibold text-gray-800">12 May 2025</p>
+                  <p className="text-gray-500 text-[10px]">10:00 AM</p>
+                </div>
+              </div>
+              <button className="btn btn-xs border border-blue-200 text-blue-600 bg-white hover:bg-blue-50 text-[10px] shrink-0">
+                View Details
+              </button>
+            </div>
+          </div>
+
+          {/* Orders Requiring Attention */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-sm font-semibold text-gray-800">Orders Requiring Attention</h2>
+              <a href="#" className="text-xs text-blue-600">View All</a>
+            </div>
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b border-gray-100 text-gray-400">
+                  {["ORDER ID","PROJECT","STATUS","DELAY","REASON","ACTION REQUIRED"].map((h) => (
+                    <th key={h} className="text-left pb-2 pr-3 font-medium text-[10px] uppercase tracking-wide">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {attentionOrders.map((o) => (
+                  <tr key={o.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="py-2.5 pr-3 font-semibold text-gray-700">{o.id}</td>
+                    <td className="py-2.5 pr-3 text-gray-600">{o.project}</td>
+                    <td className="py-2.5 pr-3">
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${o.sc}`}>{o.status}</span>
+                    </td>
+                    <td className={`py-2.5 pr-3 font-bold ${o.dc}`}>{o.delay}</td>
+                    <td className="py-2.5 pr-3 text-gray-500">{o.reason}</td>
+                    <td className="py-2.5 text-blue-600 cursor-pointer hover:underline">{o.action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* Production Pipeline */}
-        <div className="card bg-white shadow-sm border border-slate-100">
-          <div className="card-body p-5">
-            <h2 className="text-base font-bold text-slate-900 mb-3">Production Pipeline</h2>
-            <div className="grid grid-cols-5 gap-2">
-              {pipeline.map((stage, i) => (
+        {/* ── Middle: Active Orders ── */}
+        <div className="col-span-3">
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 h-full flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-sm font-semibold text-gray-800">Active Orders</h2>
+              <a href="#" className="text-xs text-blue-600 flex items-center gap-1">
+                View All <ArrowRight size={11} />
+              </a>
+            </div>
+            <div className="flex flex-col gap-4 flex-1">
+              {activeOrders.map((o) => (
+                <div key={o.id} className="pb-4 border-b border-gray-50 last:border-0 last:pb-0">
+                  <div className="flex justify-between items-start mb-1">
+                    <div>
+                      <p className="text-xs font-bold text-gray-800">{o.id}</p>
+                      <p className="text-[11px] text-gray-500 leading-tight mt-0.5">{o.name}</p>
+                    </div>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${o.sc} shrink-0 ml-2`}>
+                      {o.status}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-gray-400 mb-1.5">{o.stage}</p>
+                  <div className="w-full bg-gray-100 rounded-full h-1.5 mb-1.5">
+                    <div
+                      className="bg-blue-500 h-1.5 rounded-full transition-all"
+                      style={{ width: `${o.pct}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-[10px] text-gray-400">
+                    <span>{o.pct}%</span>
+                    <span>Due: {o.due}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <a
+              href="#"
+              className="mt-4 flex items-center justify-center gap-1 text-xs text-blue-600 py-2 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              View All Orders <ArrowRight size={12} />
+            </a>
+          </div>
+        </div>
+
+        {/* ── Right: AI Insights + Maintenance + Quick Actions ── */}
+        <div className="col-span-2 flex flex-col gap-4">
+
+          {/* AI Insights */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-sm font-semibold text-gray-800">AI Insights</h2>
+              <a href="#" className="text-xs text-blue-600">View All</a>
+            </div>
+            <div className="flex flex-col gap-2.5">
+              {aiInsights.map((ins) => (
                 <div
-                  key={i}
-                  className={`rounded-xl border-2 p-2.5 text-center ${stage.color} bg-white hover:shadow-sm transition-shadow cursor-pointer`}
+                  key={ins.title}
+                  className={`p-3 rounded-xl ${ins.type === "danger" ? "bg-red-50" : "bg-orange-50"}`}
                 >
-                  <p className="text-[10px] font-semibold uppercase tracking-wide opacity-70 leading-tight mb-1">{stage.label}</p>
-                  <p className={`text-2xl font-bold ${stage.countColor} leading-none`}>{stage.count}</p>
-                  {stage.delayed && (
-                    <p className="text-[9px] text-rose-500 font-medium mt-1">{stage.delayed}</p>
-                  )}
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle
+                      size={13}
+                      className={`mt-0.5 shrink-0 ${ins.type === "danger" ? "text-red-500" : "text-orange-400"}`}
+                    />
+                    <div>
+                      <p className="text-xs font-bold text-gray-800 leading-tight">{ins.title}</p>
+                      <p className="text-[10px] text-gray-500 mt-0.5 mb-1 leading-snug">{ins.desc}</p>
+                      <a href="#" className="text-[10px] text-blue-600 hover:underline">{ins.link}</a>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Job Detail Card */}
-        <div className="card bg-white shadow-sm border border-slate-100">
-          <div className="card-body p-5">
-            <div className="flex items-start justify-between mb-1">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-bold text-slate-900">JOB-2024-0847</h3>
-                  <span className="badge badge-sm border border-amber-300 bg-amber-50 text-amber-700 font-semibold gap-1">
-                    <AlertCircle className="w-3 h-3" /> Delayed
-                  </span>
-                </div>
-                <p className="text-sm font-medium text-slate-700 mt-0.5">Precision Gear Housing - Type B</p>
-                <p className="text-xs text-slate-400">Client: Acme Manufacturing Co.</p>
-              </div>
+          {/* Upcoming Maintenance */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-sm font-semibold text-gray-800">Upcoming Maintenance</h2>
+              <a href="#" className="text-xs text-blue-600">View All</a>
             </div>
-
-            <div className="divider my-2" />
-
-            {/* Job Details Grid */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-slate-50 rounded-xl p-3 flex items-start gap-2.5">
-                <div className="w-8 h-8 bg-slate-200 rounded-lg flex items-center justify-center shrink-0">
-                  <FileText className="w-4 h-4 text-slate-500" />
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide">Assigned Machine</p>
-                  <p className="text-sm font-bold text-slate-800">CNC-03</p>
-                </div>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-3 flex items-start gap-2.5">
-                <div className="w-8 h-8 bg-slate-200 rounded-lg flex items-center justify-center shrink-0">
-                  <User className="w-4 h-4 text-slate-500" />
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide">Assigned Labour</p>
-                  <p className="text-sm font-bold text-slate-800">Mike Chen</p>
-                </div>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-3 flex items-start gap-2.5">
-                <div className="w-8 h-8 bg-slate-200 rounded-lg flex items-center justify-center shrink-0">
-                  <Calendar className="w-4 h-4 text-slate-500" />
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide">Start Date</p>
-                  <p className="text-sm font-bold text-slate-800">Apr 18, 2026</p>
-                </div>
-              </div>
-              <div className="bg-rose-50 rounded-xl p-3 flex items-start gap-2.5 border border-rose-100">
-                <div className="w-8 h-8 bg-rose-100 rounded-lg flex items-center justify-center shrink-0">
-                  <Clock className="w-4 h-4 text-rose-500" />
-                </div>
-                <div>
-                  <p className="text-xs text-rose-400 uppercase font-semibold tracking-wide">ETA Completion</p>
-                  <p className="text-sm font-bold text-rose-600">Apr 21, 2026</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Attached Files */}
-            <div className="mt-3">
-              <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide mb-2">Attached Files</p>
-              <div className="flex gap-2">
-                {["design_specs.pdf", "cad_model.dwg"].map((file, i) => (
-                  <div key={i} className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-slate-100 transition-colors">
-                    <FileText className="w-3.5 h-3.5 text-slate-400" />
-                    <span className="text-xs text-slate-600 font-medium">{file}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Progress Timeline */}
-            <div className="mt-4">
-              <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide mb-3">Progress Timeline</p>
-              <div className="flex items-center">
-                {timelineSteps.map((step, i) => (
-                  <div key={i} className="flex items-center flex-1 last:flex-none">
-                    <div className="flex flex-col items-center gap-1">
-                      <StageIndicator status={step.status} />
-                      <span
-                        className={`text-[9px] font-medium text-center leading-tight ${
-                          step.status === "done"
-                            ? "text-emerald-600"
-                            : step.status === "active"
-                            ? "text-blue-600"
-                            : "text-slate-400"
-                        }`}
-                      >
-                        {step.label}
-                      </span>
-                    </div>
-                    {i < timelineSteps.length - 1 && (
-                      <div
-                        className={`flex-1 h-0.5 mx-1 mb-3 rounded ${
-                          timelineSteps[i + 1].status !== "pending" ? "bg-emerald-400" : "bg-slate-200"
-                        }`}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Live Machine Status */}
-        <div className="card bg-white shadow-sm border border-slate-100">
-          <div className="card-body p-5">
-            <h2 className="text-base font-bold text-slate-900 mb-4">Live Machine Status</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-              {machines.map((machine, i) => (
-                <div
-                  key={i}
-                  className={`rounded-xl border p-3.5 hover:shadow-sm transition-shadow ${machine.cardBorder}`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-bold text-slate-900">{machine.id}</span>
-                    <span className={`w-2.5 h-2.5 rounded-full ${machine.statusColor} shadow-sm`} />
-                  </div>
-                  <p className="text-xs text-slate-400 mb-2">{machine.job}</p>
-                  <div className="mb-2">
-                    <p className="text-[10px] text-slate-400 uppercase font-semibold tracking-wide">Current Stage</p>
-                    <p className="text-sm font-bold text-slate-800">{machine.stage}</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-1 mb-2.5">
-                    <div>
-                      <p className="text-[9px] text-slate-400 flex items-center gap-0.5">
-                        <Clock className="w-2.5 h-2.5" /> Start
-                      </p>
-                      <p className="text-xs font-medium text-slate-700">{machine.start}</p>
-                    </div>
-                    <div>
-                      <p className="text-[9px] text-slate-400 flex items-center gap-0.5">
-                        <Clock className="w-2.5 h-2.5" /> Finish
-                      </p>
-                      <p className="text-xs font-medium text-slate-700">{machine.finish}</p>
-                    </div>
+            <div className="flex flex-col gap-2">
+              {maintenance.map((m) => (
+                <div key={m.machine} className="flex items-start gap-2 p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                  <div className="p-1.5 bg-white rounded-md border border-gray-200 shrink-0">
+                    <Settings2 size={11} className="text-gray-500" />
                   </div>
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <p className="text-[9px] text-slate-400 uppercase font-semibold tracking-wide">Utilization</p>
-                      <span className="text-xs font-bold text-slate-700">{machine.utilization}%</span>
-                    </div>
-                    <div className="w-full bg-slate-100 rounded-full h-1.5">
-                      <div
-                        className={`${machine.barColor} h-1.5 rounded-full transition-all duration-700`}
-                        style={{ width: `${machine.utilization}%` }}
-                      />
-                    </div>
+                    <p className="text-[11px] font-semibold text-gray-700 leading-tight">{m.machine}</p>
+                    <p className="text-[10px] text-gray-400 mt-0.5">{m.date}</p>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <h2 className="text-sm font-semibold text-gray-800 mb-3">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { label: "+ New Order" },
+                { label: "Machine Status" },
+                { label: "Assign Labour" },
+                { label: "Material Request" },
+              ].map(({ label }) => (
+                <button
+                  key={label}
+                  className="border border-gray-200 rounded-lg text-[10px] text-gray-600 font-medium py-2 px-1 hover:bg-gray-50 hover:border-gray-300 transition-all text-center leading-tight"
+                >
+                  {label}
+                </button>
               ))}
             </div>
           </div>
