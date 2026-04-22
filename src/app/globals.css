@@ -2,34 +2,34 @@
 @plugin "daisyui";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #2563eb;
+  --background: #F8F8F8;
+  --foreground: oklch(0.205 0 0);
+  --primary: #F97316;
   --primary-foreground: #ffffff;
   --card: #ffffff;
-  --card-foreground: #171717;
+  --card-foreground: oklch(0.205 0 0);
   --popover: #ffffff;
-  --popover-foreground: #171717;
+  --popover-foreground: oklch(0.205 0 0);
   --secondary: #f4f4f5;
-  --secondary-foreground: #18181b;
+  --secondary-foreground: oklch(0.205 0 0);
   --muted: #f4f4f5;
   --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
+  --accent: #F97316;
+  --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #3b82f6;
-  --radius: 0.5rem;
+  --border: #ECECEC;
+  --input: #ECECEC;
+  --ring: #F97316;
+  --radius: 10px;
   --sidebar: #1a1d2e;
-  --sidebar-foreground: #cbd5e1;
-  --sidebar-primary: #2563eb;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgba(255, 255, 255, 0.05);
-  --sidebar-accent-foreground: #ffffff;
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: #1d4ed8;
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: #1d4ed8;
+  --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-border: rgba(255, 255, 255, 0.05);
-  --sidebar-ring: rgba(37, 99, 235, 0.4);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
@@ -85,6 +85,8 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {

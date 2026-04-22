@@ -45,11 +45,6 @@ const data = {
       icon: Package,
     },
     {
-      title: "Machines",
-      url: "/machines",
-      icon: Cpu,
-    },
-    {
       title: "Labour",
       url: "/labour",
       icon: Users,
@@ -87,17 +82,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar
       collapsible="icon"
       {...props}
-      className="bg-[#1a1d2e] border-r border-white/5"
+      className="bg-sidebar border-r border-sidebar-border"
     >
       {/* ── Header ── */}
-      <SidebarHeader className="h-16 flex items-center px-5 border-b border-white/5">
+      <SidebarHeader className="h-16 flex items-center px-5 border-b border-sidebar-border">
         {/* Expanded */}
         <div className="flex items-center gap-3 group-data-[collapsible=icon]:hidden whitespace-nowrap overflow-hidden">
           <div className="size-9 min-w-9 rounded-xl bg-orange-500 flex items-center justify-center shadow-lg shadow-orange-900/40 shrink-0">
-            <span className="text-white font-extrabold text-base tracking-tight">M</span>
+            <span className="text-white font-extrabold text-base tracking-tight">P</span>
           </div>
-          <span className="font-extrabold text-sm tracking-widest uppercase text-white truncate">
-            Manufacture
+          <span className="font-extrabold text-sm tracking-widest uppercase text-sidebar-foreground truncate">
+            Production
           </span>
         </div>
         {/* Collapsed */}
@@ -107,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       {/* ── Nav ── */}
-      <SidebarContent className="bg-[#1a1d2e]">
+      <SidebarContent className="bg-sidebar">
         <SidebarMenu className="px-3 py-4 gap-0.5">
           {data.navMain.map((item) => {
             const isActive = pathname === item.url;
@@ -118,21 +113,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   tooltip={item.title}
                   isActive={isActive}
                   onClick={() => setOpenMobile(false)}
-                  className={`
-                    group/btn relative flex items-center gap-3
-                    h-11 px-3 rounded-xl
-                    transition-all duration-200
-                    ${isActive
-                      ? "!bg-blue-600 !text-white shadow-lg shadow-blue-900/40"
-                      : "text-slate-400 hover:bg-blue-600/15 hover:text-white hover:pl-4"
-                    }
-                  `}
+                  className="h-10 px-3 rounded-lg transition-all duration-150 
+                    data-[active=true]:bg-blue-700 data-[active=true]:text-white
+                    data-[active=true]:shadow-md data-[active=true]:shadow-blue-900/40
+                    group/menu-item hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                 >
                   {item.icon && (
                     <item.icon
-                      className={`size-[18px] shrink-0 transition-colors duration-150 ${
-                        isActive ? "text-white" : "text-slate-400 group-hover/btn:text-white"
-                      }`}
+                      className="size-[18px] shrink-0 transition-colors duration-150 group-data-[active=true]:text-white"
                     />
                   )}
                   <span className="font-medium text-sm whitespace-nowrap overflow-hidden truncate flex-1">
@@ -160,16 +148,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       {/* ── Footer ── */}
-      <SidebarFooter className="p-4 border-t border-white/5 bg-[#1a1d2e]">
+      <SidebarFooter className="p-4 border-t border-sidebar-border bg-sidebar">
         <div className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center overflow-hidden">
-          <div className="shrink-0 size-9 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center">
-            <span className="text-blue-400 text-xs font-bold">SJ</span>
+          <div className="shrink-0 size-9 rounded-full bg-sidebar-primary/20 border border-sidebar-primary/30 flex items-center justify-center">
+            <span className="text-sidebar-primary text-xs font-bold">SJ</span>
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden min-w-0">
-            <span className="text-sm font-semibold text-white leading-tight truncate">
+            <span className="text-sm font-semibold text-sidebar-foreground leading-tight truncate">
               Sarah Johnson
             </span>
-            <span className="text-xs text-slate-500 truncate">Production Manager</span>
+            <span className="text-xs text-sidebar-foreground/50 truncate">Production Manager</span>
           </div>
         </div>
       </SidebarFooter>

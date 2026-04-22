@@ -25,11 +25,11 @@ const statCards = [
 ];
 
 const pipeline = [
-  { step: 1, label: "Queued",        value: 12, color: "bg-gray-100 border-gray-200 text-gray-600",       dot: "bg-gray-400" },
+  { step: 1, label: "Queued",        value: 12, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
   { step: 2, label: "Running",       value: 32, color: "bg-green-50 border-green-400 text-green-700",     dot: "bg-green-500", active: true },
-  { step: 3, label: "Quality Check", value: 8,  color: "bg-gray-100 border-gray-200 text-gray-600",       dot: "bg-gray-400" },
-  { step: 4, label: "QC Approved",   value: 16, color: "bg-gray-100 border-gray-200 text-gray-600",       dot: "bg-gray-400" },
-  { step: 5, label: "Completed",     value: 42, color: "bg-gray-100 border-gray-200 text-gray-600",       dot: "bg-gray-400" },
+  { step: 3, label: "Quality Check", value: 8,  color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
+  { step: 4, label: "QC Approved",   value: 16, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
+  { step: 5, label: "Completed",     value: 42, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
 ];
 
 const activeOrders = [
@@ -37,7 +37,7 @@ const activeOrders = [
   { id: "PRJ-2505-007", name: "Spindle Assembly",     stage: "Stage 4 of 5", pct: 80, eta: "14 May, 2025", sc: "text-purple-600 bg-purple-50",status: "Quality Check" },
   { id: "PRJ-2505-003", name: "Gear Housing Unit",    stage: "Stage 3 of 5", pct: 58, eta: "16 May, 2025", sc: "text-blue-600 bg-blue-50",   status: "In Production" },
   { id: "PRJ-2505-001", name: "Valve Control Module", stage: "Stage 2 of 5", pct: 30, eta: "18 May, 2025", sc: "text-orange-600 bg-orange-50",status: "Material Ready" },
-  { id: "PRJ-2505-010", name: "Motor Shaft",          stage: "Stage 1 of 5", pct: 10, eta: "20 May, 2025", sc: "text-gray-600 bg-gray-100",   status: "Planned" },
+  { id: "PRJ-2505-010", name: "Motor Shaft",          stage: "Stage 1 of 5", pct: 10, eta: "20 May, 2025", sc: "text-slate-600 bg-slate-100",   status: "Planned" },
 ];
 
 const upcomingOrders = [
@@ -106,17 +106,17 @@ function DonutChart() {
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-0">
-          <span className="text-xl font-bold text-gray-900">63%</span>
-          <span className="text-[9px] text-gray-400 mt-0.5">Utilization</span>
+          <span className="text-xl font-bold text-slate-900">63%</span>
+          <span className="text-[9px] text-slate-400 mt-0.5">Utilization</span>
         </div>
       </div>
       <div className="flex flex-col gap-2.5">
         {utilSegments.map((s) => (
           <div key={s.label} className="flex items-center gap-2">
             <div className="size-2.5 rounded-sm shrink-0" style={{ backgroundColor: s.color }} />
-            <span className="text-xs text-gray-600 w-24">{s.label}</span>
-            <span className="text-xs font-bold text-gray-800">{s.count}</span>
-            <span className="text-xs text-gray-400">({s.pct}%)</span>
+            <span className="text-xs text-slate-600 w-24">{s.label}</span>
+            <span className="text-xs font-bold text-slate-800">{s.count}</span>
+            <span className="text-xs text-slate-400">({s.pct}%)</span>
           </div>
         ))}
       </div>
@@ -127,28 +127,28 @@ function DonutChart() {
 // ── Component ──────────────────────────────────────────────
 export default function ExecutiveDashboard() {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-slate-50 p-6">
 
       {/* ── Stat Cards ── */}
       <div className="grid grid-cols-5 gap-4 mb-5">
         {statCards.map((c) => (
-          <div key={c.label} className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div key={c.label} className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
             <div className="flex justify-between items-start mb-2">
-              <p className="text-xs text-gray-500 leading-tight">{c.label}</p>
+              <p className="text-xs text-slate-500 leading-tight">{c.label}</p>
               <div className={`p-2 rounded-lg ${c.iconBg}`}>
                 <c.Icon size={15} className={c.iconColor} />
               </div>
             </div>
-            <p className="text-[1.6rem] font-bold text-gray-900 leading-none">{c.value}</p>
+            <p className="text-[1.6rem] font-bold text-slate-900 leading-none">{c.value}</p>
             <p className={`text-xs mt-1.5 ${c.cc}`}>{c.change}</p>
           </div>
         ))}
       </div>
 
       {/* ── Production Pipeline ── */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-5">
+      <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5 mb-5">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-sm font-semibold text-gray-800">Production Pipeline</h2>
+          <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Production Pipeline</h2>
           <a href="#" className="text-xs text-blue-600 flex items-center gap-1">
             View All Orders <ArrowRight size={11} />
           </a>
@@ -161,7 +161,7 @@ export default function ExecutiveDashboard() {
                   {s.step}
                 </div>
                 <p className="text-xs font-medium mb-1 opacity-80">{s.label}</p>
-                <p className={`text-3xl font-bold leading-none ${s.active ? "text-green-700" : "text-gray-800"}`}>{s.value}</p>
+                <p className={`text-3xl font-bold leading-none ${s.active ? "text-green-700" : "text-slate-800"}`}>{s.value}</p>
                 <p className="text-[10px] mt-1 opacity-60">Orders</p>
               </div>
               {i < pipeline.length - 1 && (
@@ -176,13 +176,13 @@ export default function ExecutiveDashboard() {
       <div className="grid grid-cols-3 gap-4 mb-4">
 
         {/* Active Orders */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-sm font-semibold text-gray-800">Active Orders <span className="text-gray-400 font-normal">(Top 5)</span></h2>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Active Orders <span className="text-slate-400 font-normal">(Top 5)</span></h2>
             <a href="#" className="text-xs text-blue-600 flex items-center gap-1">View All <ArrowRight size={11} /></a>
           </div>
           <div className="mb-2">
-            <div className="grid grid-cols-4 text-[10px] text-gray-400 font-medium uppercase tracking-wide pb-1 border-b border-gray-100">
+            <div className="grid grid-cols-4 text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] pb-1 border-b border-slate-100">
               <span className="col-span-1">ORDER / PROJECT</span>
               <span className="col-span-1 text-center">STAGE</span>
               <span className="col-span-1 text-center">PROGRESS</span>
@@ -193,21 +193,21 @@ export default function ExecutiveDashboard() {
             {activeOrders.map((o) => (
               <div key={o.id} className="py-2.5 grid grid-cols-4 items-center gap-1">
                 <div className="col-span-1">
-                  <p className="text-[11px] font-bold text-gray-800 leading-tight">{o.id}</p>
-                  <p className="text-[10px] text-gray-400 leading-tight">{o.name}</p>
+                  <p className="text-[11px] font-bold text-slate-800 leading-tight">{o.id}</p>
+                  <p className="text-[10px] text-slate-400 leading-tight">{o.name}</p>
                   <span className={`mt-1 inline-block px-1.5 py-0.5 rounded-full text-[9px] font-semibold ${o.sc}`}>{o.status}</span>
                 </div>
                 <div className="col-span-1 text-center">
-                  <p className="text-[10px] text-gray-500">{o.stage}</p>
+                  <p className="text-[10px] text-slate-500">{o.stage}</p>
                 </div>
                 <div className="col-span-1">
-                  <div className="w-full bg-gray-100 rounded-full h-1.5">
+                  <div className="w-full bg-slate-100 rounded-full h-1.5">
                     <div className="bg-blue-500 h-1.5 rounded-full" style={{ width: `${o.pct}%` }} />
                   </div>
-                  <p className="text-[10px] text-gray-400 mt-0.5 text-center">{o.pct}%</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5 text-center">{o.pct}%</p>
                 </div>
                 <div className="col-span-1 text-right">
-                  <p className="text-[10px] text-gray-600">{o.eta}</p>
+                  <p className="text-[10px] text-slate-600">{o.eta}</p>
                 </div>
               </div>
             ))}
@@ -215,13 +215,13 @@ export default function ExecutiveDashboard() {
         </div>
 
         {/* Upcoming Orders */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-sm font-semibold text-gray-800">Upcoming Orders</h2>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Upcoming Orders</h2>
             <a href="#" className="text-xs text-blue-600 flex items-center gap-1">View All <ArrowRight size={11} /></a>
           </div>
           <div className="mb-2">
-            <div className="grid grid-cols-3 text-[10px] text-gray-400 font-medium uppercase tracking-wide pb-1 border-b border-gray-100">
+            <div className="grid grid-cols-3 text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] pb-1 border-b border-slate-100">
               <span className="col-span-1">ORDER / PROJECT</span>
               <span className="col-span-1 text-center">START DATE</span>
               <span className="col-span-1 text-right">PRIORITY</span>
@@ -231,11 +231,11 @@ export default function ExecutiveDashboard() {
             {upcomingOrders.map((o) => (
               <div key={o.id} className="py-2.5 grid grid-cols-3 items-center">
                 <div className="col-span-1">
-                  <p className="text-[11px] font-bold text-gray-800 leading-tight">{o.id}</p>
-                  <p className="text-[10px] text-gray-400">{o.name}</p>
+                  <p className="text-[11px] font-bold text-slate-800 leading-tight">{o.id}</p>
+                  <p className="text-[10px] text-slate-400">{o.name}</p>
                 </div>
                 <div className="col-span-1 text-center">
-                  <p className="text-[10px] text-gray-600">{o.start}</p>
+                  <p className="text-[10px] text-slate-600">{o.start}</p>
                 </div>
                 <div className="col-span-1 text-right">
                   <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${o.pc}`}>{o.priority}</span>
@@ -246,9 +246,9 @@ export default function ExecutiveDashboard() {
         </div>
 
         {/* Inventory Risk Overview */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-sm font-semibold text-gray-800">Inventory Risk Overview</h2>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Inventory Risk Overview</h2>
             <a href="#" className="text-xs text-blue-600 flex items-center gap-1">View All <ArrowRight size={11} /></a>
           </div>
           {/* Summary pills */}
@@ -256,34 +256,34 @@ export default function ExecutiveDashboard() {
             <div className="bg-red-50 border border-red-100 rounded-xl p-3 text-center">
               <p className="text-2xl font-bold text-red-600">{inventoryRisk.outOfStock}</p>
               <p className="text-[10px] text-red-500 font-medium mt-0.5">Out of Stock</p>
-              <p className="text-[10px] text-gray-400">Items</p>
+              <p className="text-[10px] text-slate-400">Items</p>
             </div>
             <div className="bg-orange-50 border border-orange-100 rounded-xl p-3 text-center">
               <p className="text-2xl font-bold text-orange-500">{inventoryRisk.runningLow}</p>
               <p className="text-[10px] text-orange-500 font-medium mt-0.5">Running Low</p>
-              <p className="text-[10px] text-gray-400">Items</p>
+              <p className="text-[10px] text-slate-400">Items</p>
             </div>
             <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-3 text-center">
               <p className="text-2xl font-bold text-yellow-600">{inventoryRisk.reorderSoon}</p>
               <p className="text-[10px] text-yellow-600 font-medium mt-0.5">Reorder Soon</p>
-              <p className="text-[10px] text-gray-400">Items</p>
+              <p className="text-[10px] text-slate-400">Items</p>
             </div>
           </div>
           {/* Table */}
-          <div className="text-[10px] text-gray-400 font-medium uppercase tracking-wide grid grid-cols-4 pb-1 border-b border-gray-100">
+          <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] grid grid-cols-4 pb-1 border-b border-slate-100">
             <span className="col-span-1">ITEM</span>
             <span className="col-span-1 text-center">AVAILABLE</span>
             <span className="col-span-1 text-center">STATUS</span>
             <span className="col-span-1 text-right">TIME TO STOCKOUT</span>
           </div>
           {inventoryItems.map((it) => (
-            <div key={it.name} className="grid grid-cols-4 items-center py-2 border-b border-gray-50 last:border-0">
-              <p className="col-span-1 text-[11px] font-medium text-gray-700">{it.name}</p>
-              <p className="col-span-1 text-center text-[11px] text-gray-600">{it.available}</p>
+            <div key={it.name} className="grid grid-cols-4 items-center py-2 border-b border-slate-50 last:border-0">
+              <p className="col-span-1 text-[11px] font-medium text-slate-700">{it.name}</p>
+              <p className="col-span-1 text-center text-[11px] text-slate-600">{it.available}</p>
               <div className="col-span-1 flex justify-center">
                 <span className={`px-2 py-0.5 rounded-full text-[9px] font-semibold ${it.sc}`}>{it.status}</span>
               </div>
-              <p className="col-span-1 text-right text-[11px] text-gray-600">{it.days}</p>
+              <p className="col-span-1 text-right text-[11px] text-slate-600">{it.days}</p>
             </div>
           ))}
         </div>
@@ -293,25 +293,25 @@ export default function ExecutiveDashboard() {
       <div className="grid grid-cols-3 gap-4">
 
         {/* Recently Completed */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-sm font-semibold text-gray-800">Recently Completed <span className="text-gray-400 font-normal">(Last 5)</span></h2>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Recently Completed <span className="text-slate-400 font-normal">(Last 5)</span></h2>
             <a href="#" className="text-xs text-blue-600 flex items-center gap-1">View All <ArrowRight size={11} /></a>
           </div>
-          <div className="text-[10px] text-gray-400 font-medium uppercase tracking-wide grid grid-cols-4 pb-1 border-b border-gray-100">
+          <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] grid grid-cols-4 pb-1 border-b border-slate-100">
             <span className="col-span-1">ORDER / PROJECT</span>
             <span className="col-span-1 text-center">COMPLETED ON</span>
             <span className="col-span-1 text-center">DURATION</span>
             <span className="col-span-1 text-right">STATUS</span>
           </div>
           {recentlyCompleted.map((o) => (
-            <div key={o.id} className="grid grid-cols-4 items-center py-2.5 border-b border-gray-50 last:border-0">
+            <div key={o.id} className="grid grid-cols-4 items-center py-2.5 border-b border-slate-50 last:border-0">
               <div className="col-span-1">
-                <p className="text-[11px] font-bold text-gray-800">{o.id}</p>
-                <p className="text-[10px] text-gray-400">{o.name}</p>
+                <p className="text-[11px] font-bold text-slate-800">{o.id}</p>
+                <p className="text-[10px] text-slate-400">{o.name}</p>
               </div>
-              <p className="col-span-1 text-center text-[10px] text-gray-600">{o.date}</p>
-              <p className="col-span-1 text-center text-[10px] text-gray-600">{o.dur}</p>
+              <p className="col-span-1 text-center text-[10px] text-slate-600">{o.date}</p>
+              <p className="col-span-1 text-center text-[10px] text-slate-600">{o.dur}</p>
               <div className="col-span-1 flex justify-end">
                 <span className="px-2 py-0.5 rounded-full text-[9px] font-semibold text-green-600 bg-green-50">{o.status}</span>
               </div>
@@ -320,9 +320,9 @@ export default function ExecutiveDashboard() {
         </div>
 
         {/* Machines Utilization */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-sm font-semibold text-gray-800">Machines Utilization</h2>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Machines Utilization</h2>
             <a href="#" className="text-xs text-blue-600 flex items-center gap-1">View All <ArrowRight size={11} /></a>
           </div>
           <div className="mt-2">
@@ -331,8 +331,8 @@ export default function ExecutiveDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-          <h2 className="text-sm font-semibold text-gray-800 mb-4">Quick Actions</h2>
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
+          <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-2 gap-3">
             {[
               { label: "New Order",       Icon: Plus,     bg: "bg-blue-50",   tc: "text-blue-600"   },
@@ -343,7 +343,7 @@ export default function ExecutiveDashboard() {
             ].map(({ label, Icon, bg, tc }) => (
               <button
                 key={label}
-                className={`flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all ${bg}`}
+                className={`flex flex-col items-center gap-2 p-4 rounded-xl border border-slate-100 hover:border-slate-200 hover:shadow-sm shadow-slate-100 transition-all ${bg}`}
               >
                 <Icon size={18} className={tc} />
                 <span className={`text-xs font-medium ${tc}`}>{label}</span>

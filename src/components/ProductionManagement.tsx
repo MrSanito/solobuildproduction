@@ -98,7 +98,7 @@ const activeOrders = [
   { id: "PRJ-2505-007", name: "Hydraulic Cylinder Body",  status: "Quality Check",  stage: "Stage 4 of 5", pct: 80,  due: "14 May 2025", sc: "text-purple-600 bg-purple-50" },
   { id: "PRJ-2505-003", name: "Gear Housing Unit",        status: "In Production",  stage: "Stage 3 of 5", pct: 58,  due: "15 May 2025", sc: "text-blue-600 bg-blue-50" },
   { id: "PRJ-2505-001", name: "Valve Control Module",     status: "Material Ready", stage: "Stage 2 of 5", pct: 30,  due: "18 May 2025", sc: "text-orange-600 bg-orange-50" },
-  { id: "PRJ-2505-010", name: "Motor Shaft",              status: "Planned",        stage: "Stage 1 of 5", pct: 10,  due: "20 May 2025", sc: "text-gray-600 bg-gray-100" },
+  { id: "PRJ-2505-010", name: "Motor Shaft",              status: "Planned",        stage: "Stage 1 of 5", pct: 10,  due: "20 May 2025", sc: "text-slate-600 bg-gray-100" },
 ];
 
 const aiInsights = [
@@ -125,13 +125,13 @@ export default function ProductionManagement() {
   const [selected, setSelected] = useState(machines[5]);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-slate-50 p-6">
       {/* ── Toolbar ── */}
       <div className="flex justify-end gap-2 mb-5">
-        <button className="btn btn-sm btn-outline text-xs gap-1 border-gray-200 text-gray-600">
+        <button className="btn btn-sm btn-outline text-xs gap-1 border-slate-200 text-slate-600">
           <Cpu size={13} /> Factory Layout
         </button>
-        <button className="btn btn-sm btn-outline text-xs border-gray-200 text-gray-600">
+        <button className="btn btn-sm btn-outline text-xs border-slate-200 text-slate-600">
           Filters
         </button>
       </div>
@@ -139,14 +139,14 @@ export default function ProductionManagement() {
       {/* ── Stat Cards ── */}
       <div className="grid grid-cols-5 gap-4 mb-5">
         {statCards.map((c) => (
-          <div key={c.label} className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div key={c.label} className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
             <div className="flex justify-between items-start mb-2">
-              <p className="text-xs text-gray-500 leading-tight">{c.label}</p>
+              <p className="text-xs text-slate-500 leading-tight">{c.label}</p>
               <div className={`p-2 rounded-lg ${c.iconBg}`}>
                 <c.Icon size={15} className={c.iconColor} />
               </div>
             </div>
-            <p className="text-[1.6rem] font-bold text-gray-900 leading-none">{c.value}</p>
+            <p className="text-[1.6rem] font-bold text-slate-900 leading-none">{c.value}</p>
             {"sub" in c && c.sub && <p className={`text-xs mt-1 font-semibold ${c.subColor}`}>{c.sub}</p>}
             {c.change && <p className={`text-xs mt-1 ${c.changeColor}`}>{c.change}</p>}
           </div>
@@ -160,9 +160,9 @@ export default function ProductionManagement() {
         <div className="col-span-7 flex flex-col gap-4">
 
           {/* Production Pipeline */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-sm font-semibold text-gray-800">Production Pipeline (By Stage)</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Production Pipeline (By Stage)</h2>
               <a href="#" className="text-xs text-blue-600 flex items-center gap-1">
                 View All Orders <ArrowRight size={11} />
               </a>
@@ -173,28 +173,28 @@ export default function ProductionManagement() {
                   <div
                     className={`flex flex-col items-center px-4 py-3 rounded-xl border-2 flex-1 text-center transition-all
                       ${s.active
-                        ? "border-blue-500 bg-blue-50 shadow-sm shadow-blue-100"
-                        : "border-gray-100 bg-gray-50"
+                        ? "border-blue-500 bg-blue-50 shadow-sm shadow-slate-100 shadow-blue-100"
+                        : "border-slate-100 bg-slate-50"
                       }`}
                   >
-                    <p className={`text-[11px] font-medium mb-1 ${s.active ? "text-blue-600" : "text-gray-400"}`}>
+                    <p className={`text-[11px] font-medium mb-1 ${s.active ? "text-blue-600" : "text-slate-400"}`}>
                       {s.label}
                     </p>
-                    <p className={`text-3xl font-bold leading-none ${s.active ? "text-blue-600" : "text-gray-800"}`}>
+                    <p className={`text-3xl font-bold leading-none ${s.active ? "text-blue-600" : "text-slate-800"}`}>
                       {s.value}
                     </p>
-                    <p className="text-[10px] text-gray-400 mt-1">Orders</p>
+                    <p className="text-[10px] text-slate-400 mt-1">Orders</p>
                   </div>
-                  {i < pipeline.length - 1 && <ArrowRight size={14} className="text-gray-300 shrink-0" />}
+                  {i < pipeline.length - 1 && <ArrowRight size={14} className="text-slate-300 shrink-0" />}
                 </React.Fragment>
               ))}
             </div>
           </div>
 
           {/* Factory Layout */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex justify-between items-center mb-3">
-              <h2 className="text-sm font-semibold text-gray-800">Factory Layout (60 Machines)</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Factory Layout (60 Machines)</h2>
               <a href="#" className="text-xs text-blue-600 flex items-center gap-1">
                 View All Machines <ArrowRight size={11} />
               </a>
@@ -204,7 +204,7 @@ export default function ProductionManagement() {
               {(["broken","in use","empty"] as MachineStatus[]).map((s) => (
                 <div key={s} className="flex items-center gap-1.5">
                   <div className={`size-2.5 rounded-sm ${statusColor[s]}`} />
-                  <span className="text-[11px] text-gray-500 capitalize">{s}</span>
+                  <span className="text-[11px] text-slate-500 capitalize">{s}</span>
                 </div>
               ))}
             </div>
@@ -226,25 +226,25 @@ export default function ProductionManagement() {
               ))}
             </div>
             {/* Selected machine detail */}
-            <div className="bg-gray-50 rounded-xl border border-gray-200 p-3 flex items-center gap-4 mt-2">
+            <div className="bg-slate-50 rounded-xl border border-slate-200 p-3 flex items-center gap-4 mt-2">
               <div className="flex items-center gap-2.5 min-w-[170px]">
-                <div className="p-2 bg-white rounded-lg border border-gray-200 shadow-sm">
-                  <Settings2 size={15} className="text-gray-500" />
+                <div className="p-2 bg-white rounded-lg border border-slate-200 shadow-sm shadow-slate-100">
+                  <Settings2 size={15} className="text-slate-500" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-800 leading-tight">M06 – CNC Milling Center</p>
+                  <p className="text-xs font-bold text-slate-800 leading-tight">M06 – CNC Milling Center</p>
                   <span className="text-[10px] font-semibold text-red-500">● Broken</span>
-                  <p className="text-[10px] text-gray-400 mt-0.5">Breakdown since 10:20 AM</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">Breakdown since 10:20 AM</p>
                 </div>
               </div>
-              <div className="flex-1 grid grid-cols-2 gap-3 text-xs border-l border-gray-200 pl-4">
+              <div className="flex-1 grid grid-cols-2 gap-3 text-xs border-l border-slate-200 pl-4">
                 <div>
-                  <p className="text-[10px] text-gray-400 mb-1">Current Job</p>
-                  <p className="font-semibold text-gray-800">PRJ-2505-005</p>
-                  <p className="text-gray-500 text-[10px]">Gear Housing Unit</p>
+                  <p className="text-[10px] text-slate-400 mb-1">Current Job</p>
+                  <p className="font-semibold text-slate-800">PRJ-2505-005</p>
+                  <p className="text-slate-500 text-[10px]">Gear Housing Unit</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-400 mb-1">Assigned Labour</p>
+                  <p className="text-[10px] text-slate-400 mb-1">Assigned Labour</p>
                   <div className="flex items-center gap-1">
                     {[1,2,3].map((n) => (
                       <div
@@ -254,7 +254,7 @@ export default function ProductionManagement() {
                         {n}
                       </div>
                     ))}
-                    <span className="text-[10px] text-gray-400 ml-1">+2</span>
+                    <span className="text-[10px] text-slate-400 ml-1">+2</span>
                   </div>
                 </div>
               </div>
@@ -265,14 +265,14 @@ export default function ProductionManagement() {
           </div>
 
           {/* Orders Requiring Attention */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-sm font-semibold text-gray-800">Orders Requiring Attention</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Orders Requiring Attention</h2>
               <a href="#" className="text-xs text-blue-600">View All</a>
             </div>
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-b border-gray-100 text-gray-400">
+                <tr className="border-b border-slate-100 text-slate-400">
                   {["ORDER ID","PROJECT","STATUS","DELAY","REASON","ACTION REQUIRED"].map((h) => (
                     <th key={h} className="text-left pb-2 pr-3 font-medium text-[10px] uppercase tracking-wide">{h}</th>
                   ))}
@@ -280,14 +280,14 @@ export default function ProductionManagement() {
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {attentionOrders.map((o) => (
-                  <tr key={o.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-2.5 pr-3 font-semibold text-gray-700">{o.id}</td>
-                    <td className="py-2.5 pr-3 text-gray-600">{o.project}</td>
+                  <tr key={o.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-2.5 pr-3 font-semibold text-slate-700">{o.id}</td>
+                    <td className="py-2.5 pr-3 text-slate-600">{o.project}</td>
                     <td className="py-2.5 pr-3">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${o.sc}`}>{o.status}</span>
                     </td>
                     <td className={`py-2.5 pr-3 font-bold ${o.dc}`}>{o.delay}</td>
-                    <td className="py-2.5 pr-3 text-gray-500">{o.reason}</td>
+                    <td className="py-2.5 pr-3 text-slate-500">{o.reason}</td>
                     <td className="py-2.5 text-blue-600 cursor-pointer hover:underline">{o.action}</td>
                   </tr>
                 ))}
@@ -298,9 +298,9 @@ export default function ProductionManagement() {
 
         {/* ── Middle: Active Orders ── */}
         <div className="col-span-3">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 h-full flex flex-col">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5 h-full flex flex-col">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-sm font-semibold text-gray-800">Active Orders</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Active Orders</h2>
               <a href="#" className="text-xs text-blue-600 flex items-center gap-1">
                 View All <ArrowRight size={11} />
               </a>
@@ -310,21 +310,21 @@ export default function ProductionManagement() {
                 <div key={o.id} className="pb-4 border-b border-gray-50 last:border-0 last:pb-0">
                   <div className="flex justify-between items-start mb-1">
                     <div>
-                      <p className="text-xs font-bold text-gray-800">{o.id}</p>
-                      <p className="text-[11px] text-gray-500 leading-tight mt-0.5">{o.name}</p>
+                      <p className="text-xs font-bold text-slate-800">{o.id}</p>
+                      <p className="text-[11px] text-slate-500 leading-tight mt-0.5">{o.name}</p>
                     </div>
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${o.sc} shrink-0 ml-2`}>
                       {o.status}
                     </span>
                   </div>
-                  <p className="text-[10px] text-gray-400 mb-1.5">{o.stage}</p>
+                  <p className="text-[10px] text-slate-400 mb-1.5">{o.stage}</p>
                   <div className="w-full bg-gray-100 rounded-full h-1.5 mb-1.5">
                     <div
                       className="bg-blue-500 h-1.5 rounded-full transition-all"
                       style={{ width: `${o.pct}%` }}
                     />
                   </div>
-                  <div className="flex justify-between text-[10px] text-gray-400">
+                  <div className="flex justify-between text-[10px] text-slate-400">
                     <span>{o.pct}%</span>
                     <span>Due: {o.due}</span>
                   </div>
@@ -333,7 +333,7 @@ export default function ProductionManagement() {
             </div>
             <a
               href="#"
-              className="mt-4 flex items-center justify-center gap-1 text-xs text-blue-600 py-2 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
+              className="mt-4 flex items-center justify-center gap-1 text-xs text-blue-600 py-2 border border-slate-100 rounded-lg hover:bg-slate-50 transition-colors"
             >
               View All Orders <ArrowRight size={12} />
             </a>
@@ -344,9 +344,9 @@ export default function ProductionManagement() {
         <div className="col-span-2 flex flex-col gap-4">
 
           {/* AI Insights */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
             <div className="flex justify-between items-center mb-3">
-              <h2 className="text-sm font-semibold text-gray-800">AI Insights</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">AI Insights</h2>
               <a href="#" className="text-xs text-blue-600">View All</a>
             </div>
             <div className="flex flex-col gap-2.5">
@@ -361,8 +361,8 @@ export default function ProductionManagement() {
                       className={`mt-0.5 shrink-0 ${ins.type === "danger" ? "text-red-500" : "text-orange-400"}`}
                     />
                     <div>
-                      <p className="text-xs font-bold text-gray-800 leading-tight">{ins.title}</p>
-                      <p className="text-[10px] text-gray-500 mt-0.5 mb-1 leading-snug">{ins.desc}</p>
+                      <p className="text-xs font-bold text-slate-800 leading-tight">{ins.title}</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5 mb-1 leading-snug">{ins.desc}</p>
                       <a href="#" className="text-[10px] text-blue-600 hover:underline">{ins.link}</a>
                     </div>
                   </div>
@@ -372,20 +372,20 @@ export default function ProductionManagement() {
           </div>
 
           {/* Upcoming Maintenance */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
             <div className="flex justify-between items-center mb-3">
-              <h2 className="text-sm font-semibold text-gray-800">Upcoming Maintenance</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Upcoming Maintenance</h2>
               <a href="#" className="text-xs text-blue-600">View All</a>
             </div>
             <div className="flex flex-col gap-2">
               {maintenance.map((m) => (
-                <div key={m.machine} className="flex items-start gap-2 p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                  <div className="p-1.5 bg-white rounded-md border border-gray-200 shrink-0">
-                    <Settings2 size={11} className="text-gray-500" />
+                <div key={m.machine} className="flex items-start gap-2 p-2 rounded-lg bg-slate-50 hover:bg-gray-100 transition-colors">
+                  <div className="p-1.5 bg-white rounded-md border border-slate-200 shrink-0">
+                    <Settings2 size={11} className="text-slate-500" />
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold text-gray-700 leading-tight">{m.machine}</p>
-                    <p className="text-[10px] text-gray-400 mt-0.5">{m.date}</p>
+                    <p className="text-[11px] font-semibold text-slate-700 leading-tight">{m.machine}</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">{m.date}</p>
                   </div>
                 </div>
               ))}
@@ -393,8 +393,8 @@ export default function ProductionManagement() {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-            <h2 className="text-sm font-semibold text-gray-800 mb-3">Quick Actions</h2>
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800 mb-3">Quick Actions</h2>
             <div className="grid grid-cols-2 gap-2">
               {[
                 { label: "+ New Order" },
@@ -404,7 +404,7 @@ export default function ProductionManagement() {
               ].map(({ label }) => (
                 <button
                   key={label}
-                  className="border border-gray-200 rounded-lg text-[10px] text-gray-600 font-medium py-2 px-1 hover:bg-gray-50 hover:border-gray-300 transition-all text-center leading-tight"
+                  className="border border-slate-200 rounded-lg text-[10px] text-slate-600 font-medium py-2 px-1 hover:bg-slate-50 hover:border-gray-300 transition-all text-center leading-tight"
                 >
                   {label}
                 </button>

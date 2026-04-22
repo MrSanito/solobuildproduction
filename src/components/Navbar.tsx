@@ -8,7 +8,7 @@ const Navbar = () => {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <div className="navbar bg-white border-b border-slate-100 px-4 sticky top-0 z-40 shadow-sm">
+    <div className="navbar bg-white border-b border-slate-100 px-4 sticky top-0 z-40 shadow-none">
       <div className="flex-none">
         <button 
           onClick={toggleSidebar}
