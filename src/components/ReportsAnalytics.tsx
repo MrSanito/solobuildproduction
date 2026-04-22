@@ -44,8 +44,8 @@ const outputOverTimeData = [
 ];
 
 // ── Shared chart style tokens ──────────────────────────────────────────────
-const GRID_COLOR   = "#e5e7eb";   // tailwind gray-200
-const AXIS_COLOR   = "#9ca3af";   // tailwind gray-400
+const GRID_COLOR   = "#e5e7eb";   // tailwind slate-200
+const AXIS_COLOR   = "#9ca3af";   // tailwind slate-400
 const BLUE         = "#4a7cf7";   // matches image line/bar blue
 const RED          = "#ef4444";   // tailwind red-500
 const GREEN_TEAL   = "#10b981";   // tailwind emerald-500
@@ -62,9 +62,9 @@ const tooltipStyle: React.CSSProperties = {
 
 // ── Chart Card wrapper ─────────────────────────────────────────────────────
 const ChartCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-  <div className="card bg-base-100 border border-base-200 shadow-sm rounded-2xl">
+  <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100">
     <div className="card-body p-5 gap-4">
-      <h2 className="text-sm font-bold text-base-content tracking-tight">{title}</h2>
+      <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">{title}</h2>
       {children}
     </div>
   </div>
@@ -183,15 +183,15 @@ const OutputOverTimeChart: React.FC = () => (
 
 // ── Page ───────────────────────────────────────────────────────────────────
 const ReportsAnalytics: React.FC = () => (
-  <div className="min-h-screen bg-base-100 font-sans" data-theme="light">
-    <div className="w-full md:w-[80%] mx-auto px-4 md:px-0 py-4 space-y-3">
+  <div className="min-h-screen bg-slate-50 p-6">
+    <div className="space-y-5">
 
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-base-content">
+        <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">
           Reports &amp; Analytics
-        </h1>
-        <p className="text-sm text-base-content/50 mt-0">
+        </div>
+        <p className="text-xs text-slate-500">
           Insights and trends across production operations
         </p>
       </div>
@@ -203,7 +203,6 @@ const ReportsAnalytics: React.FC = () => (
         <DelayTrendsChart />
         <OutputOverTimeChart />
       </div>
-
     </div>
   </div>
 );

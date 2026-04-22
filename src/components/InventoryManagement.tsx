@@ -113,22 +113,22 @@ function InventoryDonut() {
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-0">
-          <span className="text-lg font-bold text-gray-900">{total.toLocaleString()}</span>
-          <span className="text-[9px] text-gray-400 mt-0.5">Total Items</span>
+          <span className="text-lg font-bold text-slate-900">{total.toLocaleString()}</span>
+          <span className="text-[9px] text-slate-400 mt-0.5">Total Items</span>
         </div>
       </div>
       <div className="flex flex-col gap-2.5">
         {segments.map((s) => (
           <div key={s.label} className="flex items-center gap-2">
             <div className="size-2.5 rounded-sm shrink-0" style={{ backgroundColor: s.color }} />
-            <span className="text-xs text-gray-600 w-24">{s.label}</span>
-            <span className="text-xs font-bold text-gray-800">{s.count.toLocaleString()}</span>
+            <span className="text-xs text-slate-600 w-24">{s.label}</span>
+            <span className="text-xs font-bold text-slate-800">{s.count.toLocaleString()}</span>
           </div>
         ))}
-        <div className="flex items-center gap-2 pt-1 border-t border-gray-100">
+        <div className="flex items-center gap-2 pt-1 border-t border-slate-100">
           <div className="size-2.5 shrink-0" />
-          <span className="text-xs text-gray-400 w-24">Total Items</span>
-          <span className="text-xs font-bold text-gray-800">{total.toLocaleString()}</span>
+          <span className="text-xs text-slate-400 w-24">Total Items</span>
+          <span className="text-xs font-bold text-slate-800">{total.toLocaleString()}</span>
         </div>
       </div>
     </div>
@@ -159,16 +159,16 @@ function CategoryDonut() {
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-0">
-          <span className="text-[11px] font-bold text-gray-900">₹3.42 Cr</span>
-          <span className="text-[8px] text-gray-400 mt-0.5">Total Value</span>
+          <span className="text-[11px] font-bold text-slate-900">₹3.42 Cr</span>
+          <span className="text-[8px] text-slate-400 mt-0.5">Total Value</span>
         </div>
       </div>
       <div className="flex flex-col gap-1.5 flex-1 min-w-0">
         {cats.map((c) => (
           <div key={c.label} className="flex items-center gap-2">
             <div className="size-2 rounded-full shrink-0" style={{ backgroundColor: c.color }} />
-            <span className="text-[10px] text-gray-600 flex-1 truncate">{c.label}</span>
-            <span className="text-[10px] text-gray-400 shrink-0">{c.value}</span>
+            <span className="text-[10px] text-slate-600 flex-1 truncate">{c.label}</span>
+            <span className="text-[10px] text-slate-400 shrink-0">{c.value}</span>
           </div>
         ))}
       </div>
@@ -189,14 +189,13 @@ export default function InventoryManagement() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-slate-50 p-6">
 
-      <div className="text-2xl font-bold text-gray-800 mb-2">Inventory Management</div>
- 
- <p className="text-sm">Real-time inventory overview and intelligent stock management</p>
+      <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">Inventory Management</div>
+      <p className="text-xs text-slate-500">Real-time inventory overview and intelligent stock management</p>
       {/* ── Page Header ── */}
       <div className="flex justify-end gap-2 mb-5">
-        <button className="btn btn-sm btn-outline border-gray-200 text-gray-600 text-xs gap-1">
+        <button className="btn btn-sm btn-outline border-slate-200 text-slate-600 text-xs gap-1">
           <Upload size={13} /> Import
         </button>
         <button className="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white text-xs gap-1 border-0">
@@ -205,7 +204,7 @@ export default function InventoryManagement() {
       </div>
 
       {/* ── Stat Cards ── */}
-      <div className="grid grid-cols-5 gap-4 mb-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-5">
         {[
           { label: "Total Items",          value: "1,248",         sub: "Across all categories", Icon: Package,       iconBg: "bg-blue-50",   iconColor: "text-blue-600"   },
           { label: "In Stock Items",        value: "982",           sub: "78.7% of total items",  Icon: Package,       iconBg: "bg-green-50",  iconColor: "text-green-600"  },
@@ -213,29 +212,29 @@ export default function InventoryManagement() {
           { label: "Out of Stock",         value: "58",            sub: "4.6% of total items",   Icon: AlertTriangle, iconBg: "bg-red-50",    iconColor: "text-red-500"    },
           { label: "Total Inventory Value",value: "₹ 3,42,18,750", sub: "Across all locations",  Icon: TrendingUp,    iconBg: "bg-blue-50",   iconColor: "text-blue-600"   },
         ].map((c) => (
-          <div key={c.label} className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+          <div key={c.label} className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
             <div className="flex justify-between items-start mb-2">
-              <p className="text-xs text-gray-500">{c.label}</p>
+              <p className="text-xs text-slate-500">{c.label}</p>
               <div className={`p-2 rounded-lg ${c.iconBg}`}>
                 <c.Icon size={14} className={c.iconColor} />
               </div>
             </div>
-            <p className="text-[1.4rem] font-bold text-gray-900 leading-tight">{c.value}</p>
-            <p className="text-[10px] text-gray-400 mt-1">{c.sub}</p>
+            <p className="text-[1.4rem] font-bold text-slate-900 leading-tight">{c.value}</p>
+            <p className="text-[10px] text-slate-400 mt-1">{c.sub}</p>
           </div>
         ))}
       </div>
 
       {/* ── Main Grid ── */}
-      <div className="grid grid-cols-12 gap-4 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4">
 
         {/* ── Left: Inventory Table ── */}
-        <div className="col-span-8">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
+        <div className="lg:col-span-8">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100">
             {/* Header */}
-            <div className="p-5 border-b border-gray-100">
+            <div className="p-5 border-b border-slate-100">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-sm font-semibold text-gray-800">Inventory List</h2>
+                <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Inventory List</h2>
                 <div className="flex items-center gap-2">
                   <button className="btn btn-xs h-7 min-h-0 px-3 bg-white border-blue-100 text-slate-600 font-semibold text-[10px] hover:bg-blue-50 hover:border-blue-200 transition-all shadow-sm flex items-center gap-1.5">
                     <Filter size={10} className="text-blue-500" /> Filters
@@ -270,7 +269,7 @@ export default function InventoryManagement() {
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                       tab === val
                         ? "bg-blue-50 text-blue-600"
-                        : "text-gray-500 hover:bg-gray-50"
+                        : "text-slate-500 hover:bg-slate-50"
                     }`}
                   >
                     {lbl}
@@ -282,42 +281,42 @@ export default function InventoryManagement() {
             {/* Table */}
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
-                <thead className="border-b border-gray-100">
-                  <tr className="text-gray-400 text-[10px] font-medium uppercase tracking-wide">
+                <thead className="border-b border-slate-100">
+                  <tr className="text-slate-400 text-[10px] font-medium uppercase tracking-wide">
                     {["Item Name","SKU","Category","Location","Available","Reserved","Incoming","Status","Time to Stockout",""].map((h) => (
                       <th key={h} className="text-left px-4 py-3 whitespace-nowrap">{h}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-50">
+                <tbody className="divide-y divide-slate-50">
                   {filtered.map((it) => (
-                    <tr key={it.sku} className="hover:bg-gray-50 transition-colors">
+                    <tr key={it.sku} className="hover:bg-slate-50 transition-colors">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <span className="text-base">{it.icon}</span>
-                          <span className="font-semibold text-gray-800 whitespace-nowrap">{it.name}</span>
+                          <span className="font-semibold text-slate-800 whitespace-nowrap">{it.name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{it.sku}</td>
-                      <td className="px-4 py-3 text-gray-600 whitespace-nowrap">{it.category}</td>
-                      <td className="px-4 py-3 text-gray-600 whitespace-nowrap">{it.location}</td>
-                      <td className="px-4 py-3 font-semibold text-gray-800 text-center">{it.available}</td>
-                      <td className="px-4 py-3 text-gray-600 text-center">{it.reserved}</td>
-                      <td className="px-4 py-3 text-gray-600 whitespace-nowrap">{it.incoming}</td>
+                      <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{it.sku}</td>
+                      <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{it.category}</td>
+                      <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{it.location}</td>
+                      <td className="px-4 py-3 font-semibold text-slate-800 text-center">{it.available}</td>
+                      <td className="px-4 py-3 text-slate-600 text-center">{it.reserved}</td>
+                      <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{it.incoming}</td>
                       <td className="px-4 py-3">
                         <span className={`px-2 py-0.5 rounded-full text-[9px] font-semibold whitespace-nowrap ${statusStyle[it.status]}`}>
                           {it.status}
                         </span>
                       </td>
                       <td className={`px-4 py-3 font-semibold whitespace-nowrap ${
-                        it.timeToStockout === "–" ? "text-gray-400" :
+                        it.timeToStockout === "–" ? "text-slate-400" :
                         it.timeToStockout.includes("1") ? "text-red-500" : "text-orange-500"
                       }`}>
                         {it.timeToStockout}
                       </td>
                       <td className="px-4 py-3">
-                        <button className="p-1 hover:bg-gray-100 rounded-md transition-colors">
-                          <MoreVertical size={13} className="text-gray-400" />
+                        <button className="p-1 hover:bg-slate-100 rounded-md transition-colors">
+                          <MoreVertical size={13} className="text-slate-400" />
                         </button>
                       </td>
                     </tr>
@@ -327,26 +326,26 @@ export default function InventoryManagement() {
             </div>
 
             {/* Pagination */}
-            <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
-              <p className="text-xs text-gray-400">Showing 1 to 10 of 1,248 items</p>
+            <div className="px-4 py-3 border-t border-slate-100 flex items-center justify-between">
+              <p className="text-xs text-slate-400">Showing 1 to 10 of 1,248 items</p>
               <div className="flex items-center gap-1">
-                <button className="btn btn-xs btn-outline border-gray-200 text-gray-500 h-7 min-h-0 px-2">
+                <button className="btn btn-xs btn-outline border-slate-200 text-slate-500 h-7 min-h-0 px-2">
                   <ChevronLeft size={12} />
                 </button>
                 {[1,2,3,4,5].map((n) => (
                   <button
                     key={n}
-                    className={`btn btn-xs h-7 min-h-0 px-2.5 ${n === page ? "bg-blue-600 text-white border-blue-600" : "btn-outline border-gray-200 text-gray-600"}`}
+                    className={`btn btn-xs h-7 min-h-0 px-2.5 ${n === page ? "bg-blue-600 text-white border-blue-600" : "btn-outline border-slate-200 text-slate-600"}`}
                   >
                     {n}
                   </button>
                 ))}
-                <span className="text-gray-400 text-xs px-1">...</span>
-                <button className="btn btn-xs btn-outline border-gray-200 text-gray-600 h-7 min-h-0 px-2.5">125</button>
-                <button className="btn btn-xs btn-outline border-gray-200 text-gray-500 h-7 min-h-0 px-2">
+                <span className="text-slate-400 text-xs px-1">...</span>
+                <button className="btn btn-xs btn-outline border-slate-200 text-slate-600 h-7 min-h-0 px-2.5">125</button>
+                <button className="btn btn-xs btn-outline border-slate-200 text-slate-500 h-7 min-h-0 px-2">
                   <ChevronRight size={12} />
                 </button>
-                <select className="select select-bordered select-xs text-[10px] border-gray-200 h-7 min-h-0 ml-2">
+                <select className="select select-bordered select-xs text-[10px] border-slate-200 h-7 min-h-0 ml-2">
                   <option>10 / page</option>
                   <option>25 / page</option>
                   <option>50 / page</option>
@@ -357,33 +356,33 @@ export default function InventoryManagement() {
         </div>
 
         {/* ── Right: Risk + Stockouts + Insights ── */}
-        <div className="col-span-4 flex flex-col gap-4">
+        <div className="lg:col-span-4 flex flex-col gap-4">
 
           {/* Inventory Risk Overview */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-sm font-semibold text-gray-800">Inventory Risk Overview</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Inventory Risk Overview</h2>
               <a href="#" className="text-xs text-blue-600 flex items-center gap-1">View All <ArrowRight size={11} /></a>
             </div>
             <InventoryDonut />
           </div>
 
           {/* Predicted Stockouts */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex justify-between items-center mb-3">
-              <h2 className="text-sm font-semibold text-gray-800">Predicted Stockouts <span className="text-gray-400 font-normal text-xs">(Next 7 Days)</span></h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Predicted Stockouts <span className="text-slate-400 font-normal">(Next 7 Days)</span></h2>
               <a href="#" className="text-xs text-blue-600">View All</a>
             </div>
             <div className="flex flex-col gap-2">
               {predictedStockouts.map((s) => (
-                <div key={s.sku} className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                <div key={s.sku} className="flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
                   <div>
-                    <p className="text-xs font-semibold text-gray-800">{s.name}</p>
-                    <p className="text-[10px] text-gray-400">{s.sku}</p>
+                    <p className="text-xs font-semibold text-slate-800">{s.name}</p>
+                    <p className="text-[10px] text-slate-400">{s.sku}</p>
                   </div>
                   <div className="text-right">
                     <p className={`text-xs font-bold ${s.dc}`}>{s.days}</p>
-                    {s.date && <p className="text-[10px] text-gray-400">{s.date}</p>}
+                    {s.date && <p className="text-[10px] text-slate-400">{s.date}</p>}
                   </div>
                 </div>
               ))}
@@ -391,23 +390,23 @@ export default function InventoryManagement() {
           </div>
 
           {/* Inventory Insights */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex justify-between items-center mb-3">
-              <h2 className="text-sm font-semibold text-gray-800">Inventory Insights</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Inventory Insights</h2>
               <a href="#" className="text-xs text-blue-600">View Report</a>
             </div>
             <div className="flex flex-col gap-2.5">
               <div className="flex items-start gap-2 p-2.5 rounded-lg bg-orange-50">
                 <AlertTriangle size={13} className="text-orange-500 mt-0.5 shrink-0" />
-                <p className="text-[11px] text-gray-700">156 items are running low and need attention.</p>
+                <p className="text-[11px] text-slate-700">156 items are running low and need attention.</p>
               </div>
               <div className="flex items-start gap-2 p-2.5 rounded-lg bg-red-50">
                 <AlertTriangle size={13} className="text-red-500 mt-0.5 shrink-0" />
-                <p className="text-[11px] text-gray-700">₹ 45,30,000 worth of inventory is at risk.</p>
+                <p className="text-[11px] text-slate-700">₹ 45,30,000 worth of inventory is at risk.</p>
               </div>
               <div className="flex items-start gap-2 p-2.5 rounded-lg bg-green-50">
                 <Package size={13} className="text-green-500 mt-0.5 shrink-0" />
-                <p className="text-[11px] text-gray-700">Order suggested for 23 items.</p>
+                <p className="text-[11px] text-slate-700">Order suggested for 23 items.</p>
               </div>
               <button className="btn btn-sm border border-blue-200 text-blue-600 bg-white hover:bg-blue-50 text-xs w-full mt-1">
                 View AI Recommendations
@@ -418,19 +417,19 @@ export default function InventoryManagement() {
       </div>
 
       {/* ── Bottom Charts ── */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
         {/* Inventory Value by Category */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-          <h2 className="text-sm font-semibold text-gray-800 mb-4">Inventory Value by Category</h2>
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
+          <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800 mb-4">Inventory Value by Category</h2>
           <CategoryDonut />
         </div>
 
         {/* Inventory Value Over Time */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-sm font-semibold text-gray-800">Inventory Value Over Time</h2>
-            <span className="text-[10px] text-gray-400 border border-gray-200 px-2 py-0.5 rounded-lg cursor-pointer">Last 30 Days ▾</span>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Inventory Value Over Time</h2>
+            <span className="text-[10px] text-slate-400 border border-slate-200 px-2 py-0.5 rounded-lg cursor-pointer">Last 30 Days ▾</span>
           </div>
           <div className="h-[180px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -485,19 +484,19 @@ export default function InventoryManagement() {
         </div>
 
         {/* Top Consumed Items */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-sm font-semibold text-gray-800">Top Consumed Items <span className="text-gray-400 font-normal text-xs">(This Month)</span></h2>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Top Consumed Items <span className="text-slate-400 font-normal">(This Month)</span></h2>
             <a href="#" className="text-xs text-blue-600">View All</a>
           </div>
           <div className="flex flex-col gap-3">
             {topConsumed.map((it) => (
               <div key={it.name}>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-gray-700 font-medium">{it.name}</span>
-                  <span className="text-xs text-gray-500">{it.qty}</span>
+                  <span className="text-xs text-slate-700 font-medium">{it.name}</span>
+                  <span className="text-xs text-slate-500">{it.qty}</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-2">
+                <div className="w-full bg-slate-100 rounded-full h-2">
                   <div
                     className="h-2 rounded-full bg-blue-500 transition-all"
                     style={{ width: `${it.pct}%` }}

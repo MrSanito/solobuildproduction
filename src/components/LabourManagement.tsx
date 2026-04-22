@@ -161,51 +161,27 @@ export default function LabourManagement() {
   const totalPages = 41;
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* ── TOP HEADER BAR ── */}
-      <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-slate-900 tracking-tight">Labour Management</h1>
-          <p className="text-xs text-slate-500 mt-0.5">Manage your workforce, attendance, skills and productivity</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              placeholder="Search by name, ID, skill, department, or machine..."
-              className="pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 bg-white border border-slate-200 rounded px-1 py-0.5">⌘K</span>
-          </div>
-          <div className="relative">
-            <Bell className="w-5 h-5 text-slate-500 cursor-pointer" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">3</span>
-          </div>
-          <MessageSquare className="w-5 h-5 text-slate-500 cursor-pointer" />
-          <div className="flex items-center gap-2 ml-2">
-            <div className="w-8 h-8 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">AM</div>
-            <div>
-              <p className="text-xs font-semibold text-slate-800 leading-none">Arjun Mehta</p>
-              <p className="text-[10px] text-slate-400">Admin</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-slate-50 p-6">
 
-      <div className="px-6 py-5 space-y-5">
+      <div className="space-y-5">
+
+        <div>
+          <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">Labour Management</div>
+          <p className="text-xs text-slate-500">Manage your workforce, attendance, skills and productivity</p>
+        </div>
 
         {/* ── SECTION 1: KPI CARDS (full width) ── */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {kpiStats.map((stat, i) => {
             const Icon = stat.icon;
             return (
-              <div key={i} className="bg-white rounded-xl border border-slate-100 shadow-sm p-4 flex items-start gap-3 hover:shadow-md transition-shadow">
+              <div key={i} className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4 flex items-start gap-3 transition-shadow">
                 <div className={`w-10 h-10 rounded-xl ${stat.iconBg} flex items-center justify-center shrink-0`}>
                   <Icon className={`w-5 h-5 ${stat.iconColor}`} />
                 </div>
                 <div>
                   <p className="text-[11px] text-slate-500 leading-none mb-1">{stat.label}</p>
-                  <p className="text-2xl font-bold text-slate-900 leading-none">{stat.value}</p>
+                  <p className="text-[1.4rem] font-bold text-slate-900 leading-tight">{stat.value}</p>
                   <p className={`text-[11px] mt-1 ${stat.subColor ?? "text-slate-400"}`}>{stat.sub}</p>
                 </div>
               </div>
@@ -216,9 +192,9 @@ export default function LabourManagement() {
         {/* ── SECTION 2: ROW 1 Overview Grids ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Attendance Overview */}
-          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-bold text-slate-800">Attendance Overview</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Attendance Overview</h2>
               <button className="text-xs font-medium text-blue-600 hover:underline">View Details</button>
             </div>
             <div className="flex items-center gap-6">
@@ -240,9 +216,9 @@ export default function LabourManagement() {
           </div>
 
           {/* Department Distribution */}
-          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-bold text-slate-800">Department Distribution</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Department Distribution</h2>
               <button className="text-xs font-medium text-blue-600 hover:underline">View All</button>
             </div>
             <div className="space-y-3">
@@ -262,8 +238,8 @@ export default function LabourManagement() {
         {/* ── SECTION 3: ROW 2 Alerts & Distribution (per user request) ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Labour Alerts */}
-          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
-            <h2 className="text-sm font-bold text-slate-800 mb-4">Labour Alerts</h2>
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800 mb-4">Labour Alerts</h2>
             <div className="space-y-3">
               {labourAlerts.map((alert, i) => {
                 const Icon = alert.icon;
@@ -285,9 +261,9 @@ export default function LabourManagement() {
           </div>
 
           {/* Upcoming Leaves (acting as Dept Distribution in text or just the remaining one) */}
-          <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
+          <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-bold text-slate-800">Upcoming Leaves</h2>
+              <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Upcoming Leaves</h2>
               <button className="text-xs font-medium text-blue-600 hover:underline">View All</button>
             </div>
             <div className="space-y-3">
@@ -311,10 +287,10 @@ export default function LabourManagement() {
         </div>
 
         {/* ── SECTION 4: LABOUR LIST (full width) ── */}
-        <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 overflow-hidden">
           {/* Table Header / Filters */}
           <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between flex-wrap gap-3">
-            <h2 className="text-sm font-bold text-slate-800">Labour List</h2>
+            <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Labour List</h2>
             <div className="flex items-center gap-2 flex-wrap">
               <select className="text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                 <option>All Departments</option>

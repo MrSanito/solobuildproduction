@@ -134,13 +134,13 @@ export default function AlertManagement() {
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-6 bg-slate-50 min-h-full">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Intelligence & Alerts</h1>
-        <p className="text-sm text-slate-500">AI-driven risk assessment and sales protocol notifications.</p>
+      <div className="mb-5">
+        <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">Intelligence & Alerts</div>
+        <p className="text-xs text-slate-500">AI-driven risk assessment and sales protocol notifications.</p>
       </div>
 
       {/* AI PRIORITY ACTIONS */}
-      <div className="bg-[#0f172a] rounded-3xl shadow-2xl overflow-hidden mb-8 border border-white/5">
+      <div className="bg-[#0f172a] rounded-3xl shadow-2xl overflow-hidden mb-5 border border-white/5">
         <button onClick={() => setShowAI(!showAI)}
           className="w-full flex items-center justify-between px-8 py-6 hover:bg-white/5 transition-colors group">
           <div className="flex items-center gap-4">
@@ -179,20 +179,20 @@ export default function AlertManagement() {
       </div>
 
       {/* KPI CARDS */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
         {[
           { label:"Revenue at Risk",     value:`₹8.4L`,  sub:`${highCount} High Priority`,       color:"text-orange-600",    bg:"bg-orange-50",    icon:AlertTriangle    },
           { label:"Leads at Risk",       value:"12",     sub:"48hr+ since last comm",            color:"text-blue-600",      bg:"bg-blue-50",      icon:Clock            },
           { label:"Blocked Capital",     value:"₹9.4L",  sub:"Awaiting approval/payment",        color:"text-red-500",       bg:"bg-red-50",       icon:CircleDollarSign },
           { label:"Funnel Loss",         value:"4.1%",   sub:"Conversion drop vs Q4",            color:"text-slate-800",     bg:"bg-slate-100",    icon:ArrowDown        },
         ].map(k => (
-          <div key={k.label} className="bg-white border border-slate-200 rounded-3xl shadow-sm p-5 hover:shadow-md transition-all">
+          <div key={k.label} className="bg-white border border-slate-100 rounded-xl shadow-sm shadow-slate-100 p-5">
             <div className="flex items-start justify-between mb-3">
                <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{k.label}</p>
-                  <p className={`text-2xl font-black ${k.color}`}>{k.value}</p>
+                  <p className={`text-[1.4rem] font-bold ${k.color}`}>{k.value}</p>
                </div>
-               <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${k.bg} border border-white shadow-sm`}>
+               <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${k.bg}`}>
                 <k.icon className={`w-5 h-5 ${k.color}`} strokeWidth={2.5} />
               </div>
             </div>
@@ -202,7 +202,7 @@ export default function AlertManagement() {
       </div>
 
       {/* TOP FILTERS */}
-      <div className="flex flex-col xl:flex-row gap-4 mb-8">
+      <div className="flex flex-col xl:flex-row gap-4 mb-5">
         <div className="flex-1 flex items-center border border-slate-200 rounded-2xl px-5 py-3 bg-white gap-3 shadow-sm focus-within:ring-2 focus-within:ring-blue-500/10 focus-within:border-blue-500 transition-all">
           <Search className="text-slate-400 shrink-0" size={18} />
           <input value={query} onChange={e => setQuery(e.target.value)}
@@ -225,7 +225,7 @@ export default function AlertManagement() {
       </div>
 
       {/* CATEGORY PILLS */}
-      <div className="flex gap-2 flex-wrap mb-8">
+      <div className="flex gap-2 flex-wrap mb-5">
         {CATEGORIES.map(cat => {
             const isActive = categoryFilter === cat;
             return (

@@ -89,7 +89,7 @@ const machines = Array.from({ length: 60 }, (_, i) => ({
 
 const statusColor: Record<MachineStatus, string> = {
   "in use": "bg-blue-500",
-  empty: "bg-gray-300",
+  empty: "bg-slate-300",
   broken: "bg-red-500",
 };
 
@@ -98,7 +98,7 @@ const activeOrders = [
   { id: "PRJ-2505-007", name: "Hydraulic Cylinder Body",  status: "Quality Check",  stage: "Stage 4 of 5", pct: 80,  due: "14 May 2025", sc: "text-purple-600 bg-purple-50" },
   { id: "PRJ-2505-003", name: "Gear Housing Unit",        status: "In Production",  stage: "Stage 3 of 5", pct: 58,  due: "15 May 2025", sc: "text-blue-600 bg-blue-50" },
   { id: "PRJ-2505-001", name: "Valve Control Module",     status: "Material Ready", stage: "Stage 2 of 5", pct: 30,  due: "18 May 2025", sc: "text-orange-600 bg-orange-50" },
-  { id: "PRJ-2505-010", name: "Motor Shaft",              status: "Planned",        stage: "Stage 1 of 5", pct: 10,  due: "20 May 2025", sc: "text-slate-600 bg-gray-100" },
+  { id: "PRJ-2505-010", name: "Motor Shaft",              status: "Planned",        stage: "Stage 1 of 5", pct: 10,  due: "20 May 2025", sc: "text-slate-600 bg-slate-100" },
 ];
 
 const aiInsights = [
@@ -126,6 +126,8 @@ export default function ProductionManagement() {
 
   return (
     <div className="min-h-screen bg-slate-50 p-6">
+      <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">Production Management</div>
+      <p className="text-xs text-slate-500">Monitor production pipeline, factory layout, and order status</p>
       {/* ── Toolbar ── */}
       <div className="flex justify-end gap-2 mb-5">
         <button className="btn btn-sm btn-outline text-xs gap-1 border-slate-200 text-slate-600">
@@ -137,7 +139,7 @@ export default function ProductionManagement() {
       </div>
 
       {/* ── Stat Cards ── */}
-      <div className="grid grid-cols-5 gap-4 mb-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-5">
         {statCards.map((c) => (
           <div key={c.label} className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
             <div className="flex justify-between items-start mb-2">
@@ -146,7 +148,7 @@ export default function ProductionManagement() {
                 <c.Icon size={15} className={c.iconColor} />
               </div>
             </div>
-            <p className="text-[1.6rem] font-bold text-slate-900 leading-none">{c.value}</p>
+            <p className="text-[1.4rem] font-bold text-slate-900 leading-tight">{c.value}</p>
             {"sub" in c && c.sub && <p className={`text-xs mt-1 font-semibold ${c.subColor}`}>{c.sub}</p>}
             {c.change && <p className={`text-xs mt-1 ${c.changeColor}`}>{c.change}</p>}
           </div>
@@ -154,10 +156,10 @@ export default function ProductionManagement() {
       </div>
 
       {/* ── Main Grid ── */}
-      <div className="grid grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         {/* ── Left: Pipeline + Factory + Attention ── */}
-        <div className="col-span-7 flex flex-col gap-4">
+        <div className="lg:col-span-7 flex flex-col gap-4">
 
           {/* Production Pipeline */}
           <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
@@ -167,7 +169,7 @@ export default function ProductionManagement() {
                 View All Orders <ArrowRight size={11} />
               </a>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {pipeline.map((s, i) => (
                 <React.Fragment key={s.label}>
                   <div
@@ -278,7 +280,7 @@ export default function ProductionManagement() {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-slate-50">
                 {attentionOrders.map((o) => (
                   <tr key={o.id} className="hover:bg-slate-50 transition-colors">
                     <td className="py-2.5 pr-3 font-semibold text-slate-700">{o.id}</td>
@@ -297,7 +299,7 @@ export default function ProductionManagement() {
         </div>
 
         {/* ── Middle: Active Orders ── */}
-        <div className="col-span-3">
+        <div className="lg:col-span-3">
           <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5 h-full flex flex-col">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">Active Orders</h2>
@@ -307,7 +309,7 @@ export default function ProductionManagement() {
             </div>
             <div className="flex flex-col gap-4 flex-1">
               {activeOrders.map((o) => (
-                <div key={o.id} className="pb-4 border-b border-gray-50 last:border-0 last:pb-0">
+                <div key={o.id} className="pb-4 border-b border-slate-50 last:border-0 last:pb-0">
                   <div className="flex justify-between items-start mb-1">
                     <div>
                       <p className="text-xs font-bold text-slate-800">{o.id}</p>
@@ -318,7 +320,7 @@ export default function ProductionManagement() {
                     </span>
                   </div>
                   <p className="text-[10px] text-slate-400 mb-1.5">{o.stage}</p>
-                  <div className="w-full bg-gray-100 rounded-full h-1.5 mb-1.5">
+                  <div className="w-full bg-slate-100 rounded-full h-1.5 mb-1.5">
                     <div
                       className="bg-blue-500 h-1.5 rounded-full transition-all"
                       style={{ width: `${o.pct}%` }}
@@ -341,7 +343,7 @@ export default function ProductionManagement() {
         </div>
 
         {/* ── Right: AI Insights + Maintenance + Quick Actions ── */}
-        <div className="col-span-2 flex flex-col gap-4">
+        <div className="lg:col-span-2 flex flex-col gap-4">
 
           {/* AI Insights */}
           <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
@@ -379,7 +381,7 @@ export default function ProductionManagement() {
             </div>
             <div className="flex flex-col gap-2">
               {maintenance.map((m) => (
-                <div key={m.machine} className="flex items-start gap-2 p-2 rounded-lg bg-slate-50 hover:bg-gray-100 transition-colors">
+                <div key={m.machine} className="flex items-start gap-2 p-2 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
                   <div className="p-1.5 bg-white rounded-md border border-slate-200 shrink-0">
                     <Settings2 size={11} className="text-slate-500" />
                   </div>
@@ -404,7 +406,7 @@ export default function ProductionManagement() {
               ].map(({ label }) => (
                 <button
                   key={label}
-                  className="border border-slate-200 rounded-lg text-[10px] text-slate-600 font-medium py-2 px-1 hover:bg-slate-50 hover:border-gray-300 transition-all text-center leading-tight"
+                  className="border border-slate-200 rounded-lg text-[10px] text-slate-600 font-medium py-2 px-1 hover:bg-slate-50 hover:border-slate-300 transition-all text-center leading-tight"
                 >
                   {label}
                 </button>

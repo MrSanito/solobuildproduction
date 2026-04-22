@@ -31,32 +31,32 @@ const statusConfig: Record<MachineStatus, {
   badge:  string;
 }> = {
   online: {
-    dot:    "bg-success",
-    border: "border-success/30",
-    bg:     "bg-success/5",
+    dot:    "bg-green-500",
+    border: "border-green-200",
+    bg:     "bg-green-50/50",
     label:  "Online",
-    badge:  "badge-success",
+    badge:  "bg-green-50 text-green-700",
   },
   fault: {
-    dot:    "bg-error",
-    border: "border-error/30",
-    bg:     "bg-error/5",
+    dot:    "bg-red-500",
+    border: "border-red-200",
+    bg:     "bg-red-50/50",
     label:  "Fault",
-    badge:  "badge-error",
+    badge:  "bg-red-50 text-red-600",
   },
   idle: {
-    dot:    "bg-warning",
-    border: "border-warning/30",
-    bg:     "bg-warning/5",
+    dot:    "bg-amber-500",
+    border: "border-amber-200",
+    bg:     "bg-amber-50/50",
     label:  "Idle",
-    badge:  "badge-warning",
+    badge:  "bg-amber-50 text-amber-700",
   },
 };
 
 const utilizationBarColor = (pct: number): string => {
-  if (pct >= 80) return "progress-success";
-  if (pct >= 50) return "progress-warning";
-  return "progress-error";
+  if (pct >= 80) return "#22c55e";
+  if (pct >= 50) return "#f59e0b";
+  return "#ef4444";
 };
 
 const formatRuntime = (h: number): string =>
@@ -70,26 +70,26 @@ const MachineCard: React.FC<{ machine: Machine }> = ({ machine }) => {
 
   return (
     <div
-      className={`card border-2 ${cfg.border} ${cfg.bg} shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer`}
+      className={`bg-white rounded-xl border ${cfg.border} shadow-sm shadow-slate-100 hover:shadow-md transition-shadow duration-200 cursor-pointer`}
     >
-      <div className="card-body p-5 gap-4">
+      <div className="p-5 space-y-4">
         {/* Header row */}
         <div className="flex items-start justify-between">
           <div>
-            <h3 className="text-lg font-bold tracking-tight text-base-content">
+            <h3 className="text-lg font-bold tracking-tight text-slate-900">
               {machine.id}
             </h3>
-            <p className="text-sm text-base-content/50 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               {machine.jobId ?? <span className="italic">No active job</span>}
             </p>
           </div>
           <span
             className={`w-3 h-3 rounded-full mt-1 flex-shrink-0 ring-4 ${
               machine.status === "online"
-                ? "bg-success ring-success/20"
+                ? "bg-green-500 ring-green-100"
                 : machine.status === "fault"
-                ? "bg-error ring-error/20"
-                : "bg-warning ring-warning/20"
+                ? "bg-red-500 ring-red-100"
+                : "bg-amber-500 ring-amber-100"
             }`}
           />
         </div>
@@ -97,32 +97,33 @@ const MachineCard: React.FC<{ machine: Machine }> = ({ machine }) => {
         {/* Utilization */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-base-content/60 flex items-center gap-1">
+            <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wide flex items-center gap-1">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
               Utilization
             </span>
-            <span className="text-sm font-bold text-base-content">
+            <span className="text-sm font-bold text-slate-800">
               {machine.utilization}%
             </span>
           </div>
-          <progress
-            className={`progress w-full h-2 ${utilizationBarColor(machine.utilization)}`}
-            value={machine.utilization}
-            max={100}
-          />
+          <div className="w-full bg-slate-100 rounded-full h-1.5">
+            <div
+              className="h-1.5 rounded-full transition-all"
+              style={{ width: `${machine.utilization}%`, backgroundColor: utilizationBarColor(machine.utilization) }}
+            />
+          </div>
         </div>
 
         {/* Runtime */}
-        <div className="flex items-center justify-between pt-1 border-t border-base-200">
-          <span className="text-xs text-base-content/50 flex items-center gap-1">
+        <div className="flex items-center justify-between pt-1 border-t border-slate-100">
+          <span className="text-[10px] text-slate-400 flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Runtime Today
           </span>
-          <span className="text-sm font-bold text-base-content">
+          <span className="text-sm font-bold text-slate-800">
             {formatRuntime(machine.runtimeHours)}
           </span>
         </div>
@@ -143,14 +144,14 @@ const SummaryBar: React.FC = () => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
       {[
-        { label: "Online",      value: online,      cls: "text-success" },
-        { label: "Fault",       value: fault,       cls: "text-error"   },
-        { label: "Idle",        value: idle,        cls: "text-warning" },
-        { label: "Avg Util.",   value: `${avgUtil}%`, cls: "text-primary" },
+        { label: "Online",      value: online,        cls: "text-green-600" },
+        { label: "Fault",       value: fault,         cls: "text-red-500"   },
+        { label: "Idle",        value: idle,          cls: "text-amber-600" },
+        { label: "Avg Util.",   value: `${avgUtil}%`, cls: "text-blue-600"  },
       ].map(({ label, value, cls }) => (
-        <div key={label} className="stat card bg-base-100 border border-base-200 shadow-sm p-4 rounded-xl">
-          <div className="stat-title text-xs text-base-content/50">{label}</div>
-          <div className={`stat-value text-2xl font-bold ${cls}`}>{value}</div>
+        <div key={label} className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
+          <p className="text-[10px] text-slate-400 uppercase tracking-wide font-medium">{label}</p>
+          <p className={`text-2xl font-bold ${cls}`}>{value}</p>
         </div>
       ))}
     </div>
@@ -166,55 +167,54 @@ const MachineManagement: React.FC = () => {
     : machines.filter((m) => m.status === filter);
 
   return (
-    <div className="min-h-screen bg-base-200 font-sans" data-theme="light">
-
-      <main className="w-full md:w-[80%] mx-auto px-4 md:px-0 py-4 space-y-3">
-        {/* Page Header */}
-        <div className="flex items-end justify-between flex-wrap gap-3">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight text-base-content">
-              Machine Management
-            </h1>
-            <p className="text-sm text-base-content/50 mt-0">
-              Monitor machine status, utilization, and maintenance schedules
-            </p>
+    <div className="min-h-screen bg-slate-50 p-6">
+      {/* Page Header */}
+      <div className="flex items-end justify-between flex-wrap gap-3 mb-5">
+        <div>
+          <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">
+            Machine Management
           </div>
-
-          {/* Filter Tabs */}
-          <div className="join">
-            {(["all", "online", "fault", "idle"] as const).map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`join-item btn btn-sm capitalize ${
-                  filter === f ? "btn-neutral" : "btn-outline"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
+          <p className="text-xs text-slate-500">
+            Monitor machine status, utilization, and maintenance schedules
+          </p>
         </div>
 
-        {/* Summary */}
-        <SummaryBar />
-
-        {/* Machine Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {visible.map((machine) => (
-            <MachineCard key={machine.id} machine={machine} />
+        {/* Filter Tabs */}
+        <div className="flex gap-1">
+          {(["all", "online", "fault", "idle"] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all ${
+                filter === f ? "bg-slate-900 text-white" : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+              }`}
+            >
+              {f}
+            </button>
           ))}
         </div>
+      </div>
 
-        {visible.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 text-base-content/30">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-sm font-medium">No machines match this filter</p>
-          </div>
-        )}
-      </main>
+      {/* Summary */}
+      <div className="mb-5">
+        <SummaryBar />
+      </div>
+
+      {/* Machine Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {visible.map((machine) => (
+          <MachineCard key={machine.id} machine={machine} />
+        ))}
+      </div>
+
+      {visible.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-20 text-slate-300">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="text-sm font-medium text-slate-400">No machines match this filter</p>
+        </div>
+      )}
     </div>
   );
 };

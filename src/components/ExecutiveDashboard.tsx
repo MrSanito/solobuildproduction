@@ -25,11 +25,11 @@ const statCards = [
 ];
 
 const pipeline = [
-  { step: 1, label: "Queued",        value: 12, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
+  { step: 1, label: "Queued",        value: 12, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-slate-400" },
   { step: 2, label: "Running",       value: 32, color: "bg-green-50 border-green-400 text-green-700",     dot: "bg-green-500", active: true },
-  { step: 3, label: "Quality Check", value: 8,  color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
-  { step: 4, label: "QC Approved",   value: 16, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
-  { step: 5, label: "Completed",     value: 42, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-gray-400" },
+  { step: 3, label: "Quality Check", value: 8,  color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-slate-400" },
+  { step: 4, label: "QC Approved",   value: 16, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-slate-400" },
+  { step: 5, label: "Completed",     value: 42, color: "bg-slate-100 border-slate-200 text-slate-600",       dot: "bg-slate-400" },
 ];
 
 const activeOrders = [
@@ -129,8 +129,11 @@ export default function ExecutiveDashboard() {
   return (
     <div className="min-h-screen bg-slate-50 p-6">
 
+      <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">Executive Dashboard</div>
+      <p className="text-xs text-slate-500 mb-5">Overview of production performance, orders, and operations</p>
+
       {/* ── Stat Cards ── */}
-      <div className="grid grid-cols-5 gap-4 mb-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-5">
         {statCards.map((c) => (
           <div key={c.label} className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-4">
             <div className="flex justify-between items-start mb-2">
@@ -139,7 +142,7 @@ export default function ExecutiveDashboard() {
                 <c.Icon size={15} className={c.iconColor} />
               </div>
             </div>
-            <p className="text-[1.6rem] font-bold text-slate-900 leading-none">{c.value}</p>
+            <p className="text-[1.4rem] font-bold text-slate-900 leading-tight">{c.value}</p>
             <p className={`text-xs mt-1.5 ${c.cc}`}>{c.change}</p>
           </div>
         ))}
@@ -153,11 +156,11 @@ export default function ExecutiveDashboard() {
             View All Orders <ArrowRight size={11} />
           </a>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {pipeline.map((s, i) => (
             <React.Fragment key={s.label}>
               <div className={`flex flex-col items-center border-2 rounded-2xl px-6 py-4 flex-1 text-center transition-all ${s.color}`}>
-                <div className={`size-7 rounded-full ${s.active ? "bg-green-500" : "bg-gray-300"} text-white text-xs font-bold flex items-center justify-center mb-2`}>
+                <div className={`size-7 rounded-full ${s.active ? "bg-green-500" : "bg-slate-300"} text-white text-xs font-bold flex items-center justify-center mb-2`}>
                   {s.step}
                 </div>
                 <p className="text-xs font-medium mb-1 opacity-80">{s.label}</p>
@@ -165,7 +168,7 @@ export default function ExecutiveDashboard() {
                 <p className="text-[10px] mt-1 opacity-60">Orders</p>
               </div>
               {i < pipeline.length - 1 && (
-                <ArrowRight size={16} className="text-gray-300 shrink-0" />
+                <ArrowRight size={16} className="text-slate-300 shrink-0" />
               )}
             </React.Fragment>
           ))}
@@ -173,7 +176,7 @@ export default function ExecutiveDashboard() {
       </div>
 
       {/* ── 3-column middle ── */}
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
 
         {/* Active Orders */}
         <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">
@@ -189,7 +192,7 @@ export default function ExecutiveDashboard() {
               <span className="col-span-1 text-right">ETA</span>
             </div>
           </div>
-          <div className="flex flex-col divide-y divide-gray-50">
+          <div className="flex flex-col divide-y divide-slate-50">
             {activeOrders.map((o) => (
               <div key={o.id} className="py-2.5 grid grid-cols-4 items-center gap-1">
                 <div className="col-span-1">
@@ -227,7 +230,7 @@ export default function ExecutiveDashboard() {
               <span className="col-span-1 text-right">PRIORITY</span>
             </div>
           </div>
-          <div className="flex flex-col divide-y divide-gray-50">
+          <div className="flex flex-col divide-y divide-slate-50">
             {upcomingOrders.map((o) => (
               <div key={o.id} className="py-2.5 grid grid-cols-3 items-center">
                 <div className="col-span-1">
@@ -290,7 +293,7 @@ export default function ExecutiveDashboard() {
       </div>
 
       {/* ── Bottom row ── */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
         {/* Recently Completed */}
         <div className="bg-white rounded-xl border border-slate-100 shadow-sm shadow-slate-100 p-5">

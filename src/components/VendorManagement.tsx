@@ -142,12 +142,12 @@ export default function VendorManagement() {
   const [selectedVendor, setSelectedVendor] = useState<any>(null);
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4">
-      <div className="w-full md:w-[80%] mx-auto px-4 md:px-0 space-y-3">
+    <div className="min-h-screen bg-slate-50 p-6">
+      <div className="space-y-5">
         {/* Page Header */}
-        <div className="pt-1">
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Vendor Management</h1>
-          <p className="text-sm text-slate-500 mt-0">Manage supplier relationships and performance</p>
+        <div>
+          <div className="text-xl font-bold text-slate-900 tracking-tight mb-0.5">Vendor Management</div>
+          <p className="text-xs text-slate-500">Manage supplier relationships and performance</p>
         </div>
 
         {/* Vendors Table */}
@@ -203,7 +203,7 @@ export default function VendorManagement() {
         </div>
 
         {/* Bottom Sections Grid */}
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Suggested Vendors */}
           <div className="card bg-white shadow-sm border border-slate-100 h-full">
             <div className="card-body p-5">
