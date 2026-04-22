@@ -120,11 +120,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   onClick={() => setOpenMobile(false)}
                   className={`
                     group/btn relative flex items-center gap-3
-                    h-10 px-3 rounded-lg
-                    transition-all duration-150
+                    h-11 px-3 rounded-xl
+                    transition-all duration-200
                     ${isActive
-                      ? "!bg-blue-600 !text-white shadow-md shadow-blue-900/40"
-                      : "text-slate-300 hover:bg-white/5 hover:text-white"
+                      ? "!bg-blue-600 !text-white shadow-lg shadow-blue-900/40"
+                      : "text-slate-400 hover:bg-blue-600/15 hover:text-white hover:pl-4"
                     }
                   `}
                 >

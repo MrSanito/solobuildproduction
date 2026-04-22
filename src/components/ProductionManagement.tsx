@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 // ── Types ──────────────────────────────────────────────────
-type MachineStatus = "running" | "idle" | "down" | "maintenance";
+type MachineStatus = "in use" | "empty" | "broken";
 
 // ── Mock Data ──────────────────────────────────────────────
 const statCards = [
@@ -74,24 +74,23 @@ const pipeline = [
 ];
 
 const rawStatuses: MachineStatus[] = [
-  "running","running","idle","running","down","running","running","idle","running","running",
-  "running","idle","running","running","running","down","running","maintenance","running","running",
-  "running","idle","running","idle","down","running","running","running","running","running",
-  "running","idle","idle","running","running","idle","running","running","down","running",
-  "running","running","running","idle","maintenance","running","running","running","running","running",
-  "running","running","running","running","running","down","running","running","down","running",
+  "in use","in use","empty","in use","broken","in use","in use","empty","in use","in use",
+  "in use","empty","in use","in use","in use","broken","in use","in use","in use","in use",
+  "in use","empty","in use","empty","broken","in use","in use","in use","in use","in use",
+  "in use","empty","empty","in use","in use","empty","in use","in use","broken","in use",
+  "in use","in use","in use","empty","in use","in use","in use","in use","in use","in use",
+  "in use","in use","in use","in use","in use","broken","in use","in use","broken","in use",
 ];
 
 const machines = Array.from({ length: 60 }, (_, i) => ({
   id: `M${String(i + 1).padStart(2, "0")}`,
-  status: rawStatuses[i] ?? "idle",
+  status: rawStatuses[i] ?? "empty",
 }));
 
 const statusColor: Record<MachineStatus, string> = {
-  running: "bg-blue-500",
-  idle: "bg-gray-300",
-  down: "bg-red-500",
-  maintenance: "bg-yellow-400",
+  "in use": "bg-blue-500",
+  empty: "bg-gray-300",
+  broken: "bg-red-500",
 };
 
 const activeOrders = [
@@ -202,7 +201,7 @@ export default function ProductionManagement() {
             </div>
             {/* Legend */}
             <div className="flex items-center gap-5 mb-3">
-              {(["running","idle","down","maintenance"] as MachineStatus[]).map((s) => (
+              {(["broken","in use","empty"] as MachineStatus[]).map((s) => (
                 <div key={s} className="flex items-center gap-1.5">
                   <div className={`size-2.5 rounded-sm ${statusColor[s]}`} />
                   <span className="text-[11px] text-gray-500 capitalize">{s}</span>
@@ -234,11 +233,11 @@ export default function ProductionManagement() {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-gray-800 leading-tight">M06 – CNC Milling Center</p>
-                  <span className="text-[10px] font-semibold text-red-500">● Down</span>
+                  <span className="text-[10px] font-semibold text-red-500">● Broken</span>
                   <p className="text-[10px] text-gray-400 mt-0.5">Breakdown since 10:20 AM</p>
                 </div>
               </div>
-              <div className="flex-1 grid grid-cols-3 gap-3 text-xs border-l border-gray-200 pl-4">
+              <div className="flex-1 grid grid-cols-2 gap-3 text-xs border-l border-gray-200 pl-4">
                 <div>
                   <p className="text-[10px] text-gray-400 mb-1">Current Job</p>
                   <p className="font-semibold text-gray-800">PRJ-2505-005</p>
@@ -257,11 +256,6 @@ export default function ProductionManagement() {
                     ))}
                     <span className="text-[10px] text-gray-400 ml-1">+2</span>
                   </div>
-                </div>
-                <div>
-                  <p className="text-[10px] text-gray-400 mb-1">Last Maintenance</p>
-                  <p className="font-semibold text-gray-800">12 May 2025</p>
-                  <p className="text-gray-500 text-[10px]">10:00 AM</p>
                 </div>
               </div>
               <button className="btn btn-xs border border-blue-200 text-blue-600 bg-white hover:bg-blue-50 text-[10px] shrink-0">
