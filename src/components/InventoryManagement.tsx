@@ -201,8 +201,10 @@ export default function InventoryManagement() {
         <button className="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white text-xs gap-1 border-0">
           <Plus size={13} /> Add New Item
         </button>
+      </div>       
+      <div>
+        
       </div>
-
       {/* ── Stat Cards ── */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-5">
         {[

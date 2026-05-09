@@ -12,7 +12,7 @@
 - **NEVER** use Tailwind `gray-*` classes — use `slate-*` equivalents only
 - Semantic colors: green-50/700, orange-50/600, red-50/600, yellow-50/700
 - Shadows: `shadow-sm shadow-slate-100` only, never deep shadows
-
+      
 ## Typography
 - **Sans:** DM Sans (body, UI)
 - **Mono:** DM Mono (data fields, SKUs, IDs)
